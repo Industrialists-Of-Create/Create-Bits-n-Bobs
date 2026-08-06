@@ -1,6 +1,7 @@
 package com.kipti.bnb.content.decoration.cogwheel_material;
 
 import com.kipti.bnb.registry.core.BnbTags;
+import com.pedrorok.hypertube.registry.ModPartialModels;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
@@ -27,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class CogwheelMaterialRenderer {
 
@@ -117,31 +119,45 @@ public class CogwheelMaterialRenderer {
 
     public static Variant getVariant(final BlockState blockState) {
         return BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.matches(blockState) ? Variant.COGWHEEL :
-                BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.matches(blockState) ? Variant.SHAFTLESS_COGWHEEL :
-                        BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.matches(blockState) ? Variant.SHAFTLESS_LARGE_COGWHEEL :
+                BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.matches(blockState) ? Variant.SHAFTLESS_LARGE_COGWHEEL :
+                        BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.matches(blockState) ? variantFor(blockState) :
                                 null;
+    }
+
+    private static final String HYPERTUBE_NAMESPACE = "create_hypertube";
+    private static final String HYPERTUBE_ENTRANCE = "hypertube_entrance";
+    private static final String HYPERTUBE_ACCELERATOR = "hypertube_accelerator";
+
+    private static Variant variantFor(final BlockState blockState) {
+        final ResourceLocation id = RegisteredObjectsHelper.getKeyOrThrow(blockState.getBlock());
+        if (id.getNamespace().equals(HYPERTUBE_NAMESPACE)
+                && (id.getPath().equals(HYPERTUBE_ENTRANCE) || id.getPath().equals(HYPERTUBE_ACCELERATOR)))
+            return Variant.SHAFTLESS_COGWHEEL_HOLE;
+        return Variant.SHAFTLESS_COGWHEEL;
     }
 
     public static void init() {
     }
 
     public enum Variant {
-        COGWHEEL(AllPartialModels.COGWHEEL),
-        SHAFTLESS_COGWHEEL(AllPartialModels.SHAFTLESS_COGWHEEL),
-        SHAFTLESS_LARGE_COGWHEEL(AllPartialModels.SHAFTLESS_LARGE_COGWHEEL);
+        COGWHEEL(() -> AllPartialModels.COGWHEEL),
+        SHAFTLESS_COGWHEEL(() -> AllPartialModels.SHAFTLESS_COGWHEEL),
+        SHAFTLESS_LARGE_COGWHEEL(() -> AllPartialModels.SHAFTLESS_LARGE_COGWHEEL),
+        SHAFTLESS_COGWHEEL_HOLE(() -> ModPartialModels.COGWHEEL_HOLE);
 
-        private final PartialModel partial;
+        private final Supplier<PartialModel> partial;
 
-        Variant(final PartialModel partial) {
+        Variant(final Supplier<PartialModel> partial) {
             this.partial = partial;
         }
 
         public BakedModel model() {
-            return this.partial.get();
+            return this.partial.get()
+                    .get();
         }
 
         public PartialModel partialModel() {
-            return this.partial;
+            return this.partial.get();
         }
     }
 

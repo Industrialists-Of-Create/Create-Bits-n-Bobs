@@ -46,7 +46,11 @@ public abstract class SingleAxisRotatingVisualMixin extends KineticBlockEntityVi
     public Instancer<RotatingInstance> updated(final InstancerProvider instance, final InstanceType<RotatingInstance> type, final Model model, final Operation<Instancer<RotatingInstance>> original, @Local(argsOnly = true) final Direction from) {
         this.bnb$face = from;
 
-        final BlockState material = SuperBlockEntityBehaviour.get(this.blockEntity, CogwheelMaterialBehaviour.TYPE).material;
+        final CogwheelMaterialBehaviour materialBehaviour = SuperBlockEntityBehaviour.get(this.blockEntity, CogwheelMaterialBehaviour.TYPE);
+        if (materialBehaviour == null || materialBehaviour.material == null)
+            return original.call(instance, type, model);
+
+        final BlockState material = materialBehaviour.material;
         this.bnb$lastMaterial = material;
 
         final CogwheelMaterialRenderer.Variant variant = CogwheelMaterialRenderer.getVariant(this.blockState);
@@ -65,7 +69,14 @@ public abstract class SingleAxisRotatingVisualMixin extends KineticBlockEntityVi
 
     @Inject(method = "update", at = @At("HEAD"))
     public void update(final float pt, final CallbackInfo ci) {
-        final BlockState material = SuperBlockEntityBehaviour.get(this.blockEntity, CogwheelMaterialBehaviour.TYPE).material;
+        if (this.bnb$lastMaterial == null)
+            return;
+
+        final CogwheelMaterialBehaviour materialBehaviour = SuperBlockEntityBehaviour.get(this.blockEntity, CogwheelMaterialBehaviour.TYPE);
+        if (materialBehaviour == null || materialBehaviour.material == null)
+            return;
+
+        final BlockState material = materialBehaviour.material;
         if (this.bnb$lastMaterial == material)
             return;
 

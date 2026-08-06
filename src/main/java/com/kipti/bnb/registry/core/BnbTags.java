@@ -135,23 +135,24 @@ public class BnbTags {
                     .add(AllBlocks.ANDESITE_ENCASED_COGWHEEL.getKey())
                     .add(AllBlocks.BRASS_ENCASED_COGWHEEL.getKey())
                     .add(BnbExtraEncasedBlocks.INDUSTRIAL_IRON_ENCASED_COGWHEEL.getKey())
-                    .add(BnbExtraEncasedBlocks.WEATHERED_IRON_ENCASED_COGWHEEL.getKey());
-//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "encased_chain_cogwheel"))
-//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "crank_wheel"))
-//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "large_crank_wheel"))
-//                    .addOptional(ResourceLocation.fromNamespaceAndPath("sliceanddice", "mechanical_slicer"))
-//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_entrance")) These would need special model
-//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_accelerator"))
-//                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "package_accelerator"))
-//                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_cogwheel"));
+                    .add(BnbExtraEncasedBlocks.WEATHERED_IRON_ENCASED_COGWHEEL.getKey())
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "encased_chain_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "crank_wheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("sliceanddice", "slicer"))
+                    //These use a special model (see SHAFTLESS_COGWHEEL_HOLE variant)
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_entrance"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_accelerator"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "package_accelerator"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_cogwheel"));
 
             prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.tag)
                     .add(AllBlocks.LARGE_COGWHEEL.getKey())
                     .add(AllBlocks.ANDESITE_ENCASED_LARGE_COGWHEEL.getKey())
                     .add(AllBlocks.BRASS_ENCASED_LARGE_COGWHEEL.getKey())
                     .add(BnbExtraEncasedBlocks.INDUSTRIAL_IRON_ENCASED_LARGE_COGWHEEL.getKey())
-                    .add(BnbExtraEncasedBlocks.WEATHERED_IRON_ENCASED_LARGE_COGWHEEL.getKey());
-//                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_large_cogwheel"));
+                    .add(BnbExtraEncasedBlocks.WEATHERED_IRON_ENCASED_LARGE_COGWHEEL.getKey())
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "large_crank_wheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_large_cogwheel"));
         });
     }
 

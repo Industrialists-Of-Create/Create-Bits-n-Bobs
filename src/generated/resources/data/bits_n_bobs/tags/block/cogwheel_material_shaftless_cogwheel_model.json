@@ -5,6 +5,34 @@
     "create:andesite_encased_cogwheel",
     "create:brass_encased_cogwheel",
     "bits_n_bobs:industrial_iron_encased_cogwheel",
-    "bits_n_bobs:weathered_iron_encased_cogwheel"
+    "bits_n_bobs:weathered_iron_encased_cogwheel",
+    {
+      "id": "create_connected:encased_chain_cogwheel",
+      "required": false
+    },
+    {
+      "id": "create_connected:crank_wheel",
+      "required": false
+    },
+    {
+      "id": "sliceanddice:slicer",
+      "required": false
+    },
+    {
+      "id": "create_hypertube:hypertube_entrance",
+      "required": false
+    },
+    {
+      "id": "create_hypertube:hypertube_accelerator",
+      "required": false
+    },
+    {
+      "id": "createadditionallogistics:package_accelerator",
+      "required": false
+    },
+    {
+      "id": "createadditionallogistics:lazy_cogwheel",
+      "required": false
+    }
   ]
 }

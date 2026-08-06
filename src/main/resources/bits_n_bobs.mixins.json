@@ -2,6 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.kipti.bnb.mixin",
+  "plugin": "com.kipti.bnb.mixin.BnbMixinPlugin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
@@ -19,6 +20,9 @@
     "chair.ContraptionMixin",
     "cogwheel_material.EncasedCogVisualMixin",
     "cogwheel_material.SingleAxisRotatingVisualMixin",
+    "cogwheel_material.create_connected.CrankWheelVisualMixin",
+    "cogwheel_material.createadditionallogistics.LazyCogVisualMixin",
+    "cogwheel_material.createadditionallogistics.PackageAcceleratorVisualMixin",
     "dyeable.fluid_tank.ConnectivityHandlerMixin",
     "dyeable.fluid_tank.FluidTankBlockEntityMixin",
     "dyeable.fluid_tank.FluidTankItemMixin",

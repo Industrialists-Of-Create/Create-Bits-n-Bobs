@@ -45,6 +45,25 @@ repositories {
         name = 'azmod-maven-snapshots'
         url = "https://maven.azmod.net/snapshots"
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'azmod-modmaven-mirror'
+                url = "https://maven.azmod.net/modmaven"
+
+                if (findProperty('azmodMavenUser') != null) {
+                    //Credentials purely required for adding new mods to cache, you will still be able to get stuff from modmaven itself / existing cache.
+                    credentials {
+                        username = findProperty('azmodMavenUser') ?: System.getenv('AZMOD_MAVEN_USER')
+                        password = findProperty('azmodMavenToken') ?: System.getenv('AZMOD_MAVEN_PASSWORD')
+                    }
+                }
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
     // Add your extra repos from broken build
     maven { url = 'https://maven.squiddev.cc' } // CC: Tweaked
     maven { url = 'https://mvn.devos.one/snapshots' }
@@ -52,6 +71,10 @@ repositories {
     maven {
         name = 'BlameJared Maven (CrT / Bookshelf)'
         url = 'https://maven.blamejared.com'
+    }
+    maven {
+        name = 'Kotlin for Forge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
     }
     exclusiveContent {
         forRepository {
@@ -139,6 +162,13 @@ dependencies {
     }
 
     //implementation("com.cake.autoload:autoload-neoforge-1.21.1:1.+")
+
+    // Actual compats here:
+    implementation("maven.modrinth:create-connected:${create_connected_version}")
+    implementation("maven.modrinth:slice-and-dice:${create_slice_and_dice_version}")
+    implementation("maven.modrinth:hypertube:${create_hypertube_version}")
+    implementation("maven.modrinth:create-additional-logistics:${createadditionallogistics_version}")
+    implementation("thedarkcolour:kotlinforforge-neoforge:${kotlin_for_forge_version}")
 
     jarJar(api("dev.ryanhcode.sable-companion:sable-companion-common-${project.minecraft_version}:[${project.sable_companion_version},)")) {
         version {

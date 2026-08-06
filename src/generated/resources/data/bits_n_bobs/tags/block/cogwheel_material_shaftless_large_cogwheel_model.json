@@ -4,6 +4,14 @@
     "create:andesite_encased_large_cogwheel",
     "create:brass_encased_large_cogwheel",
     "bits_n_bobs:industrial_iron_encased_large_cogwheel",
-    "bits_n_bobs:weathered_iron_encased_large_cogwheel"
+    "bits_n_bobs:weathered_iron_encased_large_cogwheel",
+    {
+      "id": "create_connected:large_crank_wheel",
+      "required": false
+    },
+    {
+      "id": "createadditionallogistics:lazy_large_cogwheel",
+      "required": false
+    }
   ]
 }
