@@ -9,13 +9,12 @@ import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class BaseDyeableBehaviour extends SuperBlockEntityBehaviour {
@@ -27,9 +26,8 @@ public abstract class BaseDyeableBehaviour extends SuperBlockEntityBehaviour {
         super(be);
     }
 
-
     @Override
-    public void onItemUse(final PlayerInteractEvent.RightClickBlock event) {
+    public void onItemUse(final UseItemOnBlockEvent event) {
         if (!this.isDyeingEnabled()) return;
 
         final ItemStack stack = event.getItemStack();
@@ -38,14 +36,12 @@ public abstract class BaseDyeableBehaviour extends SuperBlockEntityBehaviour {
         }
 
         if (!event.getLevel().isClientSide) {
-            if (event.getEntity() instanceof final Player player) {
-                BnbAdvancements.DYE_FLUID_COMPONENT.awardTo(player);
-            }
+            BnbAdvancements.DYE_FLUID_COMPONENT.awardTo(event.getPlayer());
             this.setColor(dyeItem.getDyeColor());
         }
 
         event.setCanceled(true);
-        event.setCancellationResult(InteractionResult.SUCCESS);
+        event.setCancellationResult(ItemInteractionResult.SUCCESS);
     }
 
     public boolean isDyeingEnabled() {
@@ -111,8 +107,8 @@ public abstract class BaseDyeableBehaviour extends SuperBlockEntityBehaviour {
     }
 
     protected void writeAdditionalDyeData(
-        final CompoundTag nbt,
-        final HolderLookup.Provider registries
+            final CompoundTag nbt,
+            final HolderLookup.Provider registries
     ) {
     }
 
@@ -141,9 +137,9 @@ public abstract class BaseDyeableBehaviour extends SuperBlockEntityBehaviour {
     }
 
     protected boolean readAdditionalDyeData(
-        final CompoundTag nbt,
-        final HolderLookup.Provider registries,
-        final boolean clientPacket
+            final CompoundTag nbt,
+            final HolderLookup.Provider registries,
+            final boolean clientPacket
     ) {
         return false;
     }

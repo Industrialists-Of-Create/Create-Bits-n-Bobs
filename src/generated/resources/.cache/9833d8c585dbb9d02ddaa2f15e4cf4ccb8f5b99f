@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-29T00:54:15.71730871	Registrate Provider for bits_n_bobs [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.21.1	2026-08-06T15:40:19.40395668	Registrate Provider for bits_n_bobs [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 bae96470ab6d0efb7a73bf4e5f0a82277358b272 assets/bits_n_bobs/blockstates/andesite_encased_flanged_cogwheel.json
 161eacda54e0ee43ba4ec50b5a179c7c27d6ab3a assets/bits_n_bobs/blockstates/andesite_encased_large_flanged_cogwheel.json
 70069cf32ef31f524297f96e15c560aa8e3e41ae assets/bits_n_bobs/blockstates/andesite_encased_piston_extension_pole.json
@@ -1085,6 +1085,10 @@ e76e46d5de1976b380b83892418c248ce1325a6e data/bits_n_bobs/recipe/veridium_tile_s
 beb46cabc06e627d0db0fdc347ece034ea0fe24b data/bits_n_bobs/recipe/veridium_tiles_from_stone_types_veridium_stonecutting.json
 68f2f6978a33b0088959480ad335ef8c29149eb9 data/bits_n_bobs/tags/block/chairs.json
 2f0560ab6864b923d56736dbf89b88d74abeb399 data/bits_n_bobs/tags/block/cogwheel_chain_no_small_offset.json
+ade27ef73febc99298ee9b12c56568fc79738496 data/bits_n_bobs/tags/block/cogwheel_material_candidates.json
+3ca3d0c6705ddf2b0a910714838da33aed882b4a data/bits_n_bobs/tags/block/cogwheel_material_cogwheel_model.json
+ddb5e407a286e45d686ad22594f92cf699ff98a6 data/bits_n_bobs/tags/block/cogwheel_material_shaftless_cogwheel_model.json
+11d1b4ac16beb6ff037e27b2ba872465e496f5e5 data/bits_n_bobs/tags/block/cogwheel_material_shaftless_large_cogwheel_model.json
 3f6ec09c6a096722cdea20a1e23a094782f1eb04 data/bits_n_bobs/tags/block/dedicated_cogwheel_chain_component.json
 4183bb7476d926ce6b0226efb2cc29df2644d097 data/bits_n_bobs/tags/block/dyeable_fluid_tank.json
 174446959ea51f74caed5b70a109ef3f49ecea86 data/bits_n_bobs/tags/block/heavy.json
@@ -1142,7 +1146,7 @@ bed0d6245b47c5fffc58a0c1d98679c1c4bbdc85 data/create/tags/item/stone_types/tuff.
 f1f656352662478775cd9db2d1ca8f7aac574145 data/create/tags/item/stone_types/veridium.json
 033f75b4c401f8616e1d2b8a61c46886cd9a5bc2 data/minecraft/tags/block/climbable.json
 83e51315030256cd957187762e5bd942601affb8 data/minecraft/tags/block/mineable/axe.json
-3a6f2697163991b10e643eb943c838325d108856 data/minecraft/tags/block/mineable/pickaxe.json
+7477fe9fe1277578dd0f996812cdcea569ecf245 data/minecraft/tags/block/mineable/pickaxe.json
 ed62c06140a0397feee5c79128d399c64719a198 data/minecraft/tags/block/slabs.json
 10c05d7d5af60bb17cc6d8618bd4354ba3dd741a data/minecraft/tags/block/stairs.json
 b8e4b52b0eaeafeb7c3642ce0fe41d29e6b0dbb0 data/minecraft/tags/block/walls.json

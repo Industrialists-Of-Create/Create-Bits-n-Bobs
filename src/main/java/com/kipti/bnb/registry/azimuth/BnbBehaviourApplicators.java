@@ -4,11 +4,13 @@ import com.cake.azimuth.foundation.preconstruct.AzPreConstructEventListener;
 import com.cake.azimuth.registration.BehaviourApplicators;
 import com.cake.azimuth.registration.VisualWrapperInterest;
 import com.cake.azimuth.registration.event.RegisterVisualWrapperInterestEvent;
+import com.kipti.bnb.content.decoration.cogwheel_material.CogwheelMaterialBehaviour;
 import com.kipti.bnb.content.decoration.dyeable.pipes.DyeablePipeBehaviour;
 import com.kipti.bnb.content.decoration.dyeable.simple.SimpleDyeableBehaviour;
 import com.kipti.bnb.content.decoration.dyeable.tanks.DyeableTankBehaviour;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.behaviour.CogwheelChainBehaviour;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChainCandidate;
+import com.kipti.bnb.registry.core.BnbTags;
 import com.simibubi.create.AllBlockEntityTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -29,6 +31,12 @@ public class BnbBehaviourApplicators {
         BehaviourApplicators.register(be -> {
             if (CogwheelChainCandidate.isValidCandidate(be.getBlockState())) {
                 return List.of(new CogwheelChainBehaviour(be));
+            }
+            return null;
+        });
+        BehaviourApplicators.register(be -> {
+            if (BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_CANDIDATES.matches(be.getBlockState())) {
+                return List.of(new CogwheelMaterialBehaviour(be));
             }
             return null;
         });

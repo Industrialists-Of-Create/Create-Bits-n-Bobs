@@ -2,6 +2,7 @@ package com.kipti.bnb.registry.core;
 
 import com.kipti.bnb.CreateBitsnBobs;
 import com.kipti.bnb.registry.content.blocks.BnbKineticBlocks;
+import com.kipti.bnb.registry.content.blocks.encased.BnbExtraEncasedBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.tterrag.registrate.providers.ProviderType;
@@ -32,7 +33,7 @@ public class BnbTags {
         @SuppressWarnings("deprecation")
         public boolean matches(final Item item) {
             return item.builtInRegistryHolder()
-                .is(this.tag);
+                    .is(this.tag);
         }
 
         public boolean matches(final ItemStack stack) {
@@ -61,6 +62,11 @@ public class BnbTags {
         EXTRA_COGWHEEL_CHAIN_CANDIDATES,
         DEDICATED_COGWHEEL_CHAIN_COMPONENT,
 
+        COGWHEEL_MATERIAL_CANDIDATES,
+        COGWHEEL_MATERIAL_COGWHEEL_MODEL,
+        COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL,
+        COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL,
+
         //For checking blocks that may be dyeable in both BnB OR BnD
         DYEABLE_FLUID_TANK;
 
@@ -74,7 +80,7 @@ public class BnbTags {
         @SuppressWarnings("deprecation")
         public boolean matches(final Block item) {
             return item.builtInRegistryHolder()
-                .is(this.tag);
+                    .is(this.tag);
         }
 
         public boolean matches(final BlockState stack) {
@@ -89,31 +95,63 @@ public class BnbTags {
     public static void registerDataGenerators() {
         CreateBitsnBobs.REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> {
             prov.addTag(BnbTags.BnbBlockTags.SUPER_HEAVY.tag)
-                .addTag(Tags.Blocks.STORAGE_BLOCKS)
-                .add(AllBlocks.INDUSTRIAL_IRON_BLOCK.getKey());
+                    .addTag(Tags.Blocks.STORAGE_BLOCKS)
+                    .add(AllBlocks.INDUSTRIAL_IRON_BLOCK.getKey());
 
             prov.addTag(BnbBlockTags.HEAVY.tag)
-                .addTag(Tags.Blocks.STONES);
+                    .addTag(Tags.Blocks.STONES);
 
             prov.addTag(BnbBlockTags.LIGHT.tag)
-                .addOptionalTag(AllTags.AllBlockTags.BRITTLE.tag)
-                .addOptionalTag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-                .addTag(BlockTags.LOGS_THAT_BURN)
-                .addTag(BlockTags.PLANKS)
-                .addTag(BlockTags.WOODEN_BUTTONS)
-                .addTag(BlockTags.WOODEN_DOORS)
-                .addTag(BlockTags.WOODEN_FENCES)
-                .addTag(BlockTags.WOODEN_SLABS)
-                .addTag(BlockTags.WOODEN_STAIRS)
-                .remove(AllBlocks.INDUSTRIAL_IRON_BLOCK.getKey());
+                    .addOptionalTag(AllTags.AllBlockTags.BRITTLE.tag)
+                    .addOptionalTag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+                    .addTag(BlockTags.LOGS_THAT_BURN)
+                    .addTag(BlockTags.PLANKS)
+                    .addTag(BlockTags.WOODEN_BUTTONS)
+                    .addTag(BlockTags.WOODEN_DOORS)
+                    .addTag(BlockTags.WOODEN_FENCES)
+                    .addTag(BlockTags.WOODEN_SLABS)
+                    .addTag(BlockTags.WOODEN_STAIRS)
+                    .remove(AllBlocks.INDUSTRIAL_IRON_BLOCK.getKey());
 
             prov.addTag(BnbBlockTags.DEDICATED_COGWHEEL_CHAIN_COMPONENT.tag)
-                .add(BnbKineticBlocks.LARGE_FLANGED_COGWHEEL.getKey())
-                .add(BnbKineticBlocks.SMALL_FLANGED_COGWHEEL.getKey());
+                    .add(BnbKineticBlocks.LARGE_FLANGED_COGWHEEL.getKey())
+                    .add(BnbKineticBlocks.SMALL_FLANGED_COGWHEEL.getKey());
 
             prov.addTag(BnbBlockTags.DYEABLE_FLUID_TANK.tag)
-                .add(AllBlocks.FLUID_TANK.getKey())
-                .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "fluid_vessel"));
+                    .add(AllBlocks.FLUID_TANK.getKey())
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "fluid_vessel"));
+
+            prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_CANDIDATES.tag)
+                    .addTag(BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.tag)
+                    .addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.tag)
+                    .addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.tag);
+
+            prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.tag)
+                    .add(AllBlocks.COGWHEEL.getKey());
+
+            prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.tag)
+                    .add(AllBlocks.MECHANICAL_MIXER.getKey())
+                    .add(AllBlocks.DISPLAY_BOARD.getKey())
+                    .add(AllBlocks.ANDESITE_ENCASED_COGWHEEL.getKey())
+                    .add(AllBlocks.BRASS_ENCASED_COGWHEEL.getKey())
+                    .add(BnbExtraEncasedBlocks.INDUSTRIAL_IRON_ENCASED_COGWHEEL.getKey())
+                    .add(BnbExtraEncasedBlocks.WEATHERED_IRON_ENCASED_COGWHEEL.getKey());
+//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "encased_chain_cogwheel"))
+//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "crank_wheel"))
+//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "large_crank_wheel"))
+//                    .addOptional(ResourceLocation.fromNamespaceAndPath("sliceanddice", "mechanical_slicer"))
+//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_entrance")) These would need special model
+//                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_accelerator"))
+//                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "package_accelerator"))
+//                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_cogwheel"));
+
+            prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.tag)
+                    .add(AllBlocks.LARGE_COGWHEEL.getKey())
+                    .add(AllBlocks.ANDESITE_ENCASED_LARGE_COGWHEEL.getKey())
+                    .add(AllBlocks.BRASS_ENCASED_LARGE_COGWHEEL.getKey())
+                    .add(BnbExtraEncasedBlocks.INDUSTRIAL_IRON_ENCASED_LARGE_COGWHEEL.getKey())
+                    .add(BnbExtraEncasedBlocks.WEATHERED_IRON_ENCASED_LARGE_COGWHEEL.getKey());
+//                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_large_cogwheel"));
         });
     }
 

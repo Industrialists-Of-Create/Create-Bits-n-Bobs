@@ -17,6 +17,8 @@
     "ServerEntityMixin",
     "ServerGamePacketListenerImplAccessor",
     "chair.ContraptionMixin",
+    "cogwheel_material.EncasedCogVisualMixin",
+    "cogwheel_material.SingleAxisRotatingVisualMixin",
     "dyeable.fluid_tank.ConnectivityHandlerMixin",
     "dyeable.fluid_tank.FluidTankBlockEntityMixin",
     "dyeable.fluid_tank.FluidTankItemMixin",

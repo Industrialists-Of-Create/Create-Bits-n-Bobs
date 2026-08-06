@@ -1,0 +1,10 @@
+{
+  "values": [
+    "create:mechanical_mixer",
+    "create:display_board",
+    "create:andesite_encased_cogwheel",
+    "create:brass_encased_cogwheel",
+    "bits_n_bobs:industrial_iron_encased_cogwheel",
+    "bits_n_bobs:weathered_iron_encased_cogwheel"
+  ]
+}
