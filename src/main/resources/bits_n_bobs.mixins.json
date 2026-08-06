@@ -55,6 +55,8 @@
     "PlayerSkyhookRendererAccessor",
     "PlayerSkyhookRendererMixin",
     "SubMenuConfigScreenMixin",
+    "cogwheel_material.CachedBuffersMixin",
+    "cogwheel_material.SafeBlockEntityRendererMixin",
     "dyeable.fluid_tank.FluidTankModelMixin",
     "dyeable.pipes.PipeAttachmentModelMixin"
   ],

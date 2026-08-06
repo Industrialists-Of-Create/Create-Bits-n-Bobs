@@ -139,6 +139,10 @@ public class CogwheelMaterialRenderer {
         public BakedModel model() {
             return this.partial.get();
         }
+
+        public PartialModel partialModel() {
+            return this.partial;
+        }
     }
 
 }

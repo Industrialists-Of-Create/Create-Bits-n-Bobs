@@ -3,6 +3,7 @@ package com.kipti.bnb;
 import com.cake.azimuth.ponder.PonderForeignLabelRegistry;
 import com.cake.struts.compat.flywheel.StrutsFlywheelCompatLoader;
 import com.cake.struts.content.StrutModelManipulator;
+import com.kipti.bnb.content.decoration.cogwheel_material.CogwheelMaterialContext;
 import com.kipti.bnb.content.decoration.cogwheel_material.CogwheelMaterialRenderer;
 import com.kipti.bnb.content.kinetics.gigantic_cogwheel.GiganticCogwheelRenderer;
 import com.kipti.bnb.content.trinkets.light.headlamp.rendering.pipeline.block_entity.HeadlampRenderCache;
@@ -59,6 +60,7 @@ public class CreateBitsnBobsClient {
         BnbSpriteShifts.register();
 
         SuperByteBufferCache.getInstance().registerCompartment(GiganticCogwheelRenderer.GIGANTIC_COGWHEEL_CACHE);
+        SuperByteBufferCache.getInstance().registerCompartment(CogwheelMaterialContext.COGWHEEL_MATERIAL);
 
         StrutsFlywheelCompatLoader.registerStrutVisual(BnbBlockEntities.GIRDER_STRUT.get());
 
