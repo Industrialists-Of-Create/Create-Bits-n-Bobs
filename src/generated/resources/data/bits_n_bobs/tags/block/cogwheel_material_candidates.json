@@ -2,6 +2,22 @@
   "values": [
     "#bits_n_bobs:cogwheel_material_cogwheel_model",
     "#bits_n_bobs:cogwheel_material_shaftless_cogwheel_model",
-    "#bits_n_bobs:cogwheel_material_shaftless_large_cogwheel_model"
+    "#bits_n_bobs:cogwheel_material_shaftless_large_cogwheel_model",
+    {
+      "id": "create_connected:crank_wheel",
+      "required": false
+    },
+    {
+      "id": "create_connected:large_crank_wheel",
+      "required": false
+    },
+    {
+      "id": "create_hypertube:hypertube_entrance",
+      "required": false
+    },
+    {
+      "id": "create_hypertube:hypertube_accelerator",
+      "required": false
+    }
   ]
 }

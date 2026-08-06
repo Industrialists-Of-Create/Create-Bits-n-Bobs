@@ -168,6 +168,7 @@ dependencies {
     implementation("maven.modrinth:slice-and-dice:${create_slice_and_dice_version}")
     implementation("maven.modrinth:hypertube:${create_hypertube_version}")
     implementation("maven.modrinth:create-additional-logistics:${createadditionallogistics_version}")
+    implementation("maven.modrinth:create-encased:${create_encased_version}")
     implementation("thedarkcolour:kotlinforforge-neoforge:${kotlin_for_forge_version}")
 
     jarJar(api("dev.ryanhcode.sable-companion:sable-companion-common-${project.minecraft_version}:[${project.sable_companion_version},)")) {

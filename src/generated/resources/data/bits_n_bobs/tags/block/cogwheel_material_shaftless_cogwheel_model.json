@@ -11,19 +11,7 @@
       "required": false
     },
     {
-      "id": "create_connected:crank_wheel",
-      "required": false
-    },
-    {
       "id": "sliceanddice:slicer",
-      "required": false
-    },
-    {
-      "id": "create_hypertube:hypertube_entrance",
-      "required": false
-    },
-    {
-      "id": "create_hypertube:hypertube_accelerator",
       "required": false
     },
     {
@@ -32,6 +20,106 @@
     },
     {
       "id": "createadditionallogistics:lazy_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:creative_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:brass_mixer",
+      "required": false
+    },
+    {
+      "id": "createcasing:copper_mixer",
+      "required": false
+    },
+    {
+      "id": "createcasing:creative_mixer",
+      "required": false
+    },
+    {
+      "id": "createcasing:industrial_iron_mixer",
+      "required": false
+    },
+    {
+      "id": "createcasing:railway_mixer",
+      "required": false
+    },
+    {
+      "id": "createcasing:refined_radiance_mixer",
+      "required": false
+    },
+    {
+      "id": "createcasing:shadow_steel_mixer",
+      "required": false
+    },
+    {
+      "id": "createcasing:weathered_iron_mixer",
+      "required": false
+    },
+    {
+      "id": "createcasing:brass_slicer",
+      "required": false
+    },
+    {
+      "id": "createcasing:copper_slicer",
+      "required": false
+    },
+    {
+      "id": "createcasing:creative_slicer",
+      "required": false
+    },
+    {
+      "id": "createcasing:industrial_iron_slicer",
+      "required": false
+    },
+    {
+      "id": "createcasing:railway_slicer",
+      "required": false
+    },
+    {
+      "id": "createcasing:refined_radiance_slicer",
+      "required": false
+    },
+    {
+      "id": "createcasing:shadow_steel_slicer",
+      "required": false
+    },
+    {
+      "id": "createcasing:weathered_iron_slicer",
+      "required": false
+    },
+    {
+      "id": "createcasing:copper_encased_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:railway_encased_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:shadow_steel_encased_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:refined_radiance_encased_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:creative_encased_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:industrial_iron_encased_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:weathered_iron_encased_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:zinc_encased_cogwheel",
       "required": false
     }
   ]

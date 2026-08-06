@@ -124,7 +124,11 @@ public class BnbTags {
             prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_CANDIDATES.tag)
                     .addTag(BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.tag)
                     .addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.tag)
-                    .addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.tag);
+                    .addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.tag)
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "crank_wheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "large_crank_wheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_entrance"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_accelerator"));
 
             prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.tag)
                     .add(AllBlocks.COGWHEEL.getKey());
@@ -137,13 +141,35 @@ public class BnbTags {
                     .add(BnbExtraEncasedBlocks.INDUSTRIAL_IRON_ENCASED_COGWHEEL.getKey())
                     .add(BnbExtraEncasedBlocks.WEATHERED_IRON_ENCASED_COGWHEEL.getKey())
                     .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "encased_chain_cogwheel"))
-                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "crank_wheel"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("sliceanddice", "slicer"))
-                    //These use a special model (see SHAFTLESS_COGWHEEL_HOLE variant)
-                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_entrance"))
-                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_accelerator"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "package_accelerator"))
-                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_cogwheel"));
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_cogwheel"))
+                    //Create Encased (createcasing): plain cogwheels/mixers/slicers render the standard shaftless model
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "creative_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "brass_mixer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "copper_mixer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "creative_mixer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "industrial_iron_mixer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "railway_mixer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "refined_radiance_mixer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "shadow_steel_mixer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "weathered_iron_mixer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "brass_slicer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "copper_slicer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "creative_slicer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "industrial_iron_slicer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "railway_slicer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "refined_radiance_slicer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "shadow_steel_slicer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "weathered_iron_slicer"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "copper_encased_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "railway_encased_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "shadow_steel_encased_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "refined_radiance_encased_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "creative_encased_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "industrial_iron_encased_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "weathered_iron_encased_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "zinc_encased_cogwheel"));
 
             prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.tag)
                     .add(AllBlocks.LARGE_COGWHEEL.getKey())
@@ -151,8 +177,15 @@ public class BnbTags {
                     .add(AllBlocks.BRASS_ENCASED_LARGE_COGWHEEL.getKey())
                     .add(BnbExtraEncasedBlocks.INDUSTRIAL_IRON_ENCASED_LARGE_COGWHEEL.getKey())
                     .add(BnbExtraEncasedBlocks.WEATHERED_IRON_ENCASED_LARGE_COGWHEEL.getKey())
-                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "large_crank_wheel"))
-                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_large_cogwheel"));
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createadditionallogistics", "lazy_large_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "copper_encased_large_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "railway_encased_large_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "shadow_steel_encased_large_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "refined_radiance_encased_large_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "creative_encased_large_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "industrial_iron_encased_large_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "weathered_iron_encased_large_cogwheel"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "zinc_encased_large_cogwheel"));
         });
     }
 

@@ -1,5 +1,6 @@
 package com.kipti.bnb.content.decoration.cogwheel_material;
 
+import com.hlysine.create_connected.registries.CCPartialModels;
 import com.kipti.bnb.registry.core.BnbTags;
 import com.pedrorok.hypertube.registry.ModPartialModels;
 import com.simibubi.create.AllPartialModels;
@@ -120,20 +121,25 @@ public class CogwheelMaterialRenderer {
     public static Variant getVariant(final BlockState blockState) {
         return BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.matches(blockState) ? Variant.COGWHEEL :
                 BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.matches(blockState) ? Variant.SHAFTLESS_LARGE_COGWHEEL :
-                        BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.matches(blockState) ? variantFor(blockState) :
-                                null;
+                        BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.matches(blockState) ? Variant.SHAFTLESS_COGWHEEL :
+                                getMiscVariant(blockState);
     }
 
-    private static final String HYPERTUBE_NAMESPACE = "create_hypertube";
-    private static final String HYPERTUBE_ENTRANCE = "hypertube_entrance";
-    private static final String HYPERTUBE_ACCELERATOR = "hypertube_accelerator";
-
-    private static Variant variantFor(final BlockState blockState) {
+    private static Variant getMiscVariant(final BlockState blockState) {
         final ResourceLocation id = RegisteredObjectsHelper.getKeyOrThrow(blockState.getBlock());
-        if (id.getNamespace().equals(HYPERTUBE_NAMESPACE)
-                && (id.getPath().equals(HYPERTUBE_ENTRANCE) || id.getPath().equals(HYPERTUBE_ACCELERATOR)))
+
+        if (id.getNamespace().equals("create_hypertube")
+                && (id.getPath().equals("hypertube_entrance") || id.getPath().equals("hypertube_accelerator")))
             return Variant.SHAFTLESS_COGWHEEL_HOLE;
-        return Variant.SHAFTLESS_COGWHEEL;
+
+        if (id.getNamespace().equals("create_connected")) {
+            if (id.getPath().equals("crank_wheel"))
+                return Variant.CRANK_WHEEL_COGWHEEL;
+            if (id.getPath().equals("large_crank_wheel"))
+                return Variant.LARGE_CRANK_WHEEL_COGWHEEL;
+        }
+
+        return null;
     }
 
     public static void init() {
@@ -143,7 +149,9 @@ public class CogwheelMaterialRenderer {
         COGWHEEL(() -> AllPartialModels.COGWHEEL),
         SHAFTLESS_COGWHEEL(() -> AllPartialModels.SHAFTLESS_COGWHEEL),
         SHAFTLESS_LARGE_COGWHEEL(() -> AllPartialModels.SHAFTLESS_LARGE_COGWHEEL),
-        SHAFTLESS_COGWHEEL_HOLE(() -> ModPartialModels.COGWHEEL_HOLE);
+        SHAFTLESS_COGWHEEL_HOLE(() -> ModPartialModels.COGWHEEL_HOLE),
+        CRANK_WHEEL_COGWHEEL(() -> CCPartialModels.CRANK_WHEEL_BASE),
+        LARGE_CRANK_WHEEL_COGWHEEL(() -> CCPartialModels.LARGE_CRANK_WHEEL_BASE);
 
         private final Supplier<PartialModel> partial;
 

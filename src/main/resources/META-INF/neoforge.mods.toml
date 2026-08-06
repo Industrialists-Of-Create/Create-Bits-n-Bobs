@@ -48,3 +48,14 @@ versionRange="[1.0.0,)"
 ordering="AFTER"
 side="BOTH"
 
+[[dependencies.${mod_id}]]
+modId="createcasing"
+type="optional"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="create_connected"
+type="optional"
+ordering="AFTER"
+side="BOTH"

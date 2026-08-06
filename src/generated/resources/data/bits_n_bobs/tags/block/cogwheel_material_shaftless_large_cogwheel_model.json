@@ -6,11 +6,39 @@
     "bits_n_bobs:industrial_iron_encased_large_cogwheel",
     "bits_n_bobs:weathered_iron_encased_large_cogwheel",
     {
-      "id": "create_connected:large_crank_wheel",
+      "id": "createadditionallogistics:lazy_large_cogwheel",
       "required": false
     },
     {
-      "id": "createadditionallogistics:lazy_large_cogwheel",
+      "id": "createcasing:copper_encased_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:railway_encased_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:shadow_steel_encased_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:refined_radiance_encased_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:creative_encased_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:industrial_iron_encased_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:weathered_iron_encased_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:zinc_encased_large_cogwheel",
       "required": false
     }
   ]
