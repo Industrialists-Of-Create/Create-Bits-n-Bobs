@@ -28,7 +28,9 @@ public class BnbMixinPlugin implements IMixinConfigPlugin {
             "com.kipti.bnb.mixin.cogwheel_material.createadditionallogistics.PackageAcceleratorVisualMixin", Map.of(
                     "dev.khloeleclair.create.additionallogistics.client.content.logistics.packageAccelerator.PackageAcceleratorVisual", "createadditionallogistics"),
             "com.kipti.bnb.mixin.cogwheel_material.create_connected.CrankWheelVisualMixin", Map.of(
-                    "com.hlysine.create_connected.content.crankwheel.CrankWheelVisual", "create_connected")
+                    "com.hlysine.create_connected.content.crankwheel.CrankWheelVisual", "create_connected"),
+            "com.kipti.bnb.mixin.compat.createcasing.ItemChangeBlockManagerMixin", Map.of(
+                    "fr.iglee42.createcasing.utils.ItemChangeBlockManager", "createcasing")
     );
 
     @Override

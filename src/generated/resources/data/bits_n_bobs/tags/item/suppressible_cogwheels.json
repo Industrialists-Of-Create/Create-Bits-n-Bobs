@@ -1,0 +1,84 @@
+{
+  "values": [
+    {
+      "id": "createcasing:acacia_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:acacia_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:birch_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:birch_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:bamboo_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:bamboo_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:cherry_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:cherry_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:crimson_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:crimson_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:dark_oak_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:dark_oak_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:oak_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:oak_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:jungle_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:jungle_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:mangrove_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:mangrove_large_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:warped_cogwheel",
+      "required": false
+    },
+    {
+      "id": "createcasing:warped_large_cogwheel",
+      "required": false
+    }
+  ]
+}

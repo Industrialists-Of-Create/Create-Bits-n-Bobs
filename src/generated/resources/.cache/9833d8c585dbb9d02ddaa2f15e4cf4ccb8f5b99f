@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-07T08:21:06.296170621	Registrate Provider for bits_n_bobs [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.21.1	2026-08-07T16:05:28.881057408	Registrate Provider for bits_n_bobs [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 bae96470ab6d0efb7a73bf4e5f0a82277358b272 assets/bits_n_bobs/blockstates/andesite_encased_flanged_cogwheel.json
 161eacda54e0ee43ba4ec50b5a179c7c27d6ab3a assets/bits_n_bobs/blockstates/andesite_encased_large_flanged_cogwheel.json
 70069cf32ef31f524297f96e15c560aa8e3e41ae assets/bits_n_bobs/blockstates/andesite_encased_piston_extension_pole.json
@@ -147,8 +147,8 @@ c0190afa39321b2f2c2ef4fc2365954911f2b89b assets/bits_n_bobs/blockstates/white_ch
 bbb308f65d8082773ca234d880ab5896c2390014 assets/bits_n_bobs/blockstates/yellow_chair.json
 4db90e28dfc8d1b622b3336685268b883059c3fb assets/bits_n_bobs/blockstates/yellow_large_nixie_tube.json
 98c1742a3f1ee6f357a35cadd1559b1d5f6d364a assets/bits_n_bobs/blockstates/yellow_nixie_board.json
-02222b4c7b6567e2c8b5bca586b2f7b7345a45ff assets/bits_n_bobs/lang/en_ud.json
-b16e44642212a65acb9a2a1508cfb223c52bc3b2 assets/bits_n_bobs/lang/en_us.json
+585a161e94b7803486b85517aa7f17875dc76d61 assets/bits_n_bobs/lang/en_ud.json
+97101a4188ec44f30d76b010cba94c4a3d9069fc assets/bits_n_bobs/lang/en_us.json
 42e62dfae8361f2959305f50adfaaffafe2b3e5a assets/bits_n_bobs/models/block/andesite_encased_flanged_cogwheel.json
 77e1dc1a5410d8439303b65e92d739dbf9cad9ef assets/bits_n_bobs/models/block/andesite_encased_flanged_cogwheel_bottom.json
 189ffb75ff304fd545f38f215657c4e114a6d435 assets/bits_n_bobs/models/block/andesite_encased_flanged_cogwheel_top.json
@@ -1097,6 +1097,7 @@ b577f1ba68b8c54c21bc2241d06f527151352bee data/bits_n_bobs/tags/block/cogwheel_ma
 7681fb6a60113ffee3ed66d3608e432ca4745279 data/bits_n_bobs/tags/block/nixie_tubes.json
 7f3c60eee318d93879ff49da2bed2343a654787b data/bits_n_bobs/tags/block/super_heavy.json
 68f2f6978a33b0088959480ad335ef8c29149eb9 data/bits_n_bobs/tags/item/chairs.json
+aed440e81c0f0f08ed0c4578c60e5f94071d9d2a data/bits_n_bobs/tags/item/suppressible_cogwheels.json
 2cb2802b72d43e1df64d640dfba8ff2cc66bc4f8 data/c/tags/entity_type/teleporting_not_supported.json
 de30238a3ec01e43241a56c5c283d45aae3597b7 data/c/tags/item/ropes.json
 0ebc5af10fcfcff286ab3f6f3a83b07f799248b3 data/create/advancement/recipes/building_blocks/andesite_tile_slab_recycling.json

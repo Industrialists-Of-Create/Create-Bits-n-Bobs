@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 
@@ -25,6 +26,24 @@ public class CogwheelMaterialBehaviour extends SuperBlockEntityBehaviour {
     public CogwheelMaterialBehaviour(final SmartBlockEntity be) {
         super(be);
         this.material = Blocks.SPRUCE_PLANKS.defaultBlockState();
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        this.tryTransferOnRemoval();
+    }
+
+    private void tryTransferOnRemoval() {
+        final BlockEntity replacingBlockEntity = this.getLevel().getBlockEntity(this.getPos());
+        final CogwheelMaterialBehaviour replacingBehaviour = this.getSameBehaviour(replacingBlockEntity);
+
+        if (replacingBehaviour == null)
+            return;
+
+        replacingBehaviour.material = this.material;
+        replacingBehaviour.sendData();
+
     }
 
     @Override

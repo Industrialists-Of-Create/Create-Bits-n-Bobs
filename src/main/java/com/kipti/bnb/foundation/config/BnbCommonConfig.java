@@ -10,14 +10,23 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.kipti.bnb.registry.core.FeatureCategories.BEHAVIOUR;
-import static com.kipti.bnb.registry.core.FeatureCategories.BLOCK;
-import static com.kipti.bnb.registry.core.FeatureCategories.ITEM;
+import static com.kipti.bnb.registry.core.FeatureCategories.*;
 
 /**
  * Common configuration for Bits 'n' Bobs, containing feature flag toggles.
  */
 public class BnbCommonConfig extends ConfigBase {
+
+    public final ConfigGroup COMPATABILITY_OPTIONS_GROUP = this.group(
+            0,
+            "compatabilityOptions",
+            "Options to help improve the behaviour of Bits 'n' Bobs alongside other mods. (Opt-in)"
+    );
+    public final ConfigBool SUPPRESS_EXTERNAL_WOODEN_COGWHEELS = this.b(
+            true,
+            "suppressExternalWoodenCogwheels",
+            "Suppresses wooden cogwheels from other mods in favour of Bits 'n' Bobs' behaviour system. Intended for Create: Encased but may work with other mods with proper tags."
+    );
 
     public final ConfigGroup FEATURE_FLAGS_GROUP = this.group(
             0,

@@ -7,6 +7,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.tterrag.registrate.providers.ProviderType;
 import net.createmod.catnip.lang.Lang;
+import net.minecraft.data.tags.TagsProvider.TagAppender;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -21,7 +22,8 @@ public class BnbTags {
 
     public enum BnbItemTags {
 
-        CHAIRS;
+        CHAIRS,
+        SUPPRESSIBLE_COGWHEELS;
 
         public final TagKey<Item> tag;
 
@@ -186,6 +188,15 @@ public class BnbTags {
                     .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "industrial_iron_encased_large_cogwheel"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "weathered_iron_encased_large_cogwheel"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "zinc_encased_large_cogwheel"));
+        });
+
+        CreateBitsnBobs.REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> {
+            final TagAppender<Item> cogwheelTag = prov.addTag(BnbItemTags.SUPPRESSIBLE_COGWHEELS.tag);
+            //Create: Encased (createcasing) wooden cogwheels, mirroring TransmissionSets' wood list (spruce excluded: it reuses Create's own cogwheel)
+            for (final String wood : new String[]{"acacia", "birch", "bamboo", "cherry", "crimson", "dark_oak", "oak", "jungle", "mangrove", "warped"}) {
+                cogwheelTag.addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", wood + "_cogwheel"));
+                cogwheelTag.addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", wood + "_large_cogwheel"));
+            }
         });
     }
 

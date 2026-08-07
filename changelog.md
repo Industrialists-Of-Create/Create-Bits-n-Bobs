@@ -291,6 +291,7 @@
 - Added flanged cogwheel connectivity, flanged cogwheels can connect to other cogwheels but not other flanged cogwheels.
 - Added cogwheel material compat to:
   Create: Connected, Create: Slice 'n' Dice, Create: Hypertubes, Create: Additional Logistics, Create: Encased
+- Added a config option to suppress the wooden cogwheels in Create: Encased
 - Fixed excessively large headlamp shape with sable
 - Fixed an issue where dyed nixie blocks would not drop anything
 - Fixed flanged cogwheels turning into normal cogwheels when being unencased

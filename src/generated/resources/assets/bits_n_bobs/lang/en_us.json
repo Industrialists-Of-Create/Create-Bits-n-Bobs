@@ -238,5 +238,6 @@
   "tooltip.bits_n_bobs.flywheel_bearing.flywheel_stats": "Flywheel Stats:",
   "tooltip.bits_n_bobs.flywheel_bearing.full": "(full)",
   "tooltip.bits_n_bobs.flywheel_bearing.kinetic_transfer": "Kinetic Transfer:",
-  "tooltip.bits_n_bobs.flywheel_bearing.stored_stress": "Stored Stress:"
+  "tooltip.bits_n_bobs.flywheel_bearing.stored_stress": "Stored Stress:",
+  "tooltip.bits_n_bobs.suppressed_cogwheel": "This wooden cogwheel is being hidden due to Bits 'n' Bobs' config"
 }
