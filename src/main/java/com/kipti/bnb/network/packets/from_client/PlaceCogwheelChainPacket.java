@@ -73,9 +73,8 @@ public record PlaceCogwheelChainPacket(
         final List<PathedCogwheelNode> chainGeometry;
         try {
             chainGeometry = CogwheelChainPathfinder.buildChainPath(this.worldSpacePartialChain);
-        } catch (final
-        ChainInteractionFailedException ignored) { //We assume the client has been notified if the path was invalid, anything else is tampering
-            return;
+        } catch (final ChainInteractionFailedException e) {
+            throw new IllegalStateException(e);
         }
         if (chainGeometry == null)
             return;

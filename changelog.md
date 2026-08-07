@@ -4,7 +4,7 @@
     - Allowed shift placing a brass lamp to force a direction
     - Added flywheel kinetic storage factor configuration
     - Added chain drive cost factor configuration
-    - Added feature flags to all recipes, now they will disable if the relevant block(s) are disabled
+    - Added feature flags to all recipes, now they will disable if the relevant block (s) are disabled
     - Added rejection for placing a chain drive if the feature is disabled
     - Chair description includes the fact it can have corners and flat backs
 - Fixes:
@@ -253,7 +253,7 @@
 # 1.21.1-2.1.10-beta
 
 - Properly linked pipe config to dyeing action so it can actually be disabled.
-- Changed all toLowerCase() calls to toLowerCase(Locale.ROOT) to avoid issues with Turkish locale.
+- Changed all toLowerCase () calls to toLowerCase (Locale.ROOT) to avoid issues with Turkish locale.
 - Cleanup missing assets in log
 
 # 1.21.1-2.1.11-beta
@@ -283,3 +283,14 @@
 # 1.21.1-2.1.15-beta
 
 - Add config options for max cogwheel chain size and node count
+
+# 1.21.1-2.2.0
+
+- 2.0.0 stable release!
+- Added cogwheel materials, allowing you to change the wood type of cogwheels
+- Added flanged cogwheel connectivity, flanged cogwheels can connect to other cogwheels but not other flanged cogwheels.
+- Added cogwheel material compat to:
+  Create: Connected, Create: Slice 'n' Dice, Create: Hypertubes, Create: Additional Logistics, Create: Encased
+- Fixed excessively large headlamp shape with sable
+- Fixed an issue where dyed nixie blocks would not drop anything
+- Fixed flanged cogwheels turning into normal cogwheels when being unencased

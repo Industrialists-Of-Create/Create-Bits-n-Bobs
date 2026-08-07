@@ -6,7 +6,11 @@ import com.kipti.bnb.content.kinetics.cogwheel_chain.behaviour.CogwheelChainBeha
 import com.kipti.bnb.content.kinetics.cogwheel_chain.edit.CogwheelChainPartialEdit;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.edit.CogwheelChainPartialEditInsertionPlan;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.edit.CogwheelChainPartialEditInsertionPlanner;
-import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.*;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChain;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChainPathfinder;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PathedCogwheelNode;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PlacingCogwheelChain;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PlacingCogwheelNode;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.placement.ChainInteractionFailedException;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.segment.CogwheelChainSegment;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.types.CogwheelChainType;
@@ -148,12 +152,17 @@ public record PartialEditCogwheelChainPacket(
             return;
         }
 
-        final CogwheelChainPartialEditInsertionPlan insertionPlan = CogwheelChainPartialEditInsertionPlanner.plan(
-            existingChain,
-            editContext,
-            this.newCogwheelPos,
-            placementState
-        );
+        final CogwheelChainPartialEditInsertionPlan insertionPlan;
+        try {
+            insertionPlan = CogwheelChainPartialEditInsertionPlanner.plan(
+                existingChain,
+                editContext,
+                this.newCogwheelPos,
+                placementState
+            );
+        } catch (final ChainInteractionFailedException e) {
+            throw new IllegalStateException(e);
+        }
         if (insertionPlan == null) {
             level.setBlock(this.newCogwheelPos, originalState, Block.UPDATE_ALL);
             return;
@@ -165,7 +174,12 @@ public record PartialEditCogwheelChainPacket(
             return;
         }
 
-        final List<PathedCogwheelNode> chainGeometry = this.buildChainGeometry(rebuiltChain);
+        final List<PathedCogwheelNode> chainGeometry;
+        try {
+            chainGeometry = this.buildChainGeometry(rebuiltChain);
+        } catch (final ChainInteractionFailedException e) {
+            throw new IllegalStateException(e);
+        }
         if (chainGeometry == null) {
             level.setBlock(this.newCogwheelPos, originalState, Block.UPDATE_ALL);
             return;
@@ -262,12 +276,9 @@ public record PartialEditCogwheelChainPacket(
             && this.chainPosition - SEGMENT_POSITION_EPSILON <= authoritativeSegment.endDist();
     }
 
-    private @Nullable List<PathedCogwheelNode> buildChainGeometry(final PlacingCogwheelChain rebuiltChain) {
-        try {
-            return CogwheelChainPathfinder.buildChainPath(rebuiltChain);
-        } catch (final ChainInteractionFailedException ignored) {
-            return null;
-        }
+    private @Nullable List<PathedCogwheelNode> buildChainGeometry(final PlacingCogwheelChain rebuiltChain)
+            throws ChainInteractionFailedException {
+        return CogwheelChainPathfinder.buildChainPath(rebuiltChain);
     }
 
     private boolean tryConsumeChains(final ServerPlayer player, final Item chainItem, final int addedCost) {

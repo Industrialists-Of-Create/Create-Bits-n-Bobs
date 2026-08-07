@@ -2,7 +2,11 @@ package com.kipti.bnb.content.decoration.palette;
 
 import com.kipti.bnb.CreateBitsnBobs;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
-import com.simibubi.create.foundation.block.connected.*;
+import com.simibubi.create.foundation.block.connected.AllCTTypes;
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
+import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
+import com.simibubi.create.foundation.block.connected.CTType;
+import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;

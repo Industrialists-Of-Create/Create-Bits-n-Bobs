@@ -1,6 +1,10 @@
 package com.kipti.bnb.content.trinkets.nixie.large_nixie_tube;
 
-import com.kipti.bnb.content.trinkets.nixie.foundation.*;
+import com.kipti.bnb.content.trinkets.nixie.foundation.DoubleOrientedDirections;
+import com.kipti.bnb.content.trinkets.nixie.foundation.DyeProviderBlock;
+import com.kipti.bnb.content.trinkets.nixie.foundation.GenericNixieDisplayBlock;
+import com.kipti.bnb.content.trinkets.nixie.foundation.GenericNixieDisplayBlockEntity;
+import com.kipti.bnb.content.trinkets.nixie.foundation.IGenericNixieDisplayBlock;
 import com.kipti.bnb.registry.client.BnbShapes;
 import com.kipti.bnb.registry.content.BnbBlockEntities;
 import com.kipti.bnb.registry.content.blocks.BnbTrinketBlocks;

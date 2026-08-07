@@ -1,6 +1,10 @@
 package com.kipti.bnb.content.kinetics.cogwheel_chain.edit;
 
-import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.*;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChain;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChainCandidate;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PathedCogwheelNode;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PlacingCogwheelChain;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PlacingCogwheelNode;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.placement.ChainInteractionFailedException;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.segment.CogwheelChainSegment;
 import com.kipti.bnb.registry.core.BnbConfigs;
@@ -23,17 +27,14 @@ public class CogwheelChainPartialEditInsertionPlanner {
     public static @Nullable CogwheelChainPartialEditInsertionPlan plan(final CogwheelChain existingChain,
                                                                        final CogwheelChainPartialEdit editContext,
                                                                        final BlockPos proposedPos,
-                                                                       final BlockState proposedState) {
+                                                                       final BlockState proposedState)
+            throws ChainInteractionFailedException {
         final CogwheelChainCandidate candidate = CogwheelChainCandidate.getForBlock(proposedState);
         if (candidate == null)
             return null;
         if (!editContext.chainType().getCogwheelPredicate().test(proposedState.getBlock()))
             return null;
-        try {
-            return planWithCandidate(existingChain, editContext, proposedPos, candidate);
-        } catch (final ChainInteractionFailedException ignored) {
-            return null;
-        }
+        return planWithCandidate(existingChain, editContext, proposedPos, candidate);
     }
 
     /**

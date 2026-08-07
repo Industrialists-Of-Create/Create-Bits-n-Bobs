@@ -13,7 +13,7 @@ import java.util.List;
  * Computes per-face quad corners, UVs, and subdivision, then emits vertices via a {@link VertexEmitter} callback
  * so each rendering backend can handle vertex output in its own way.
  */
-public final class ChainQuadBuilder {
+public class ChainQuadBuilder {
 
     public static final int SUBDIVISION_COUNT = 4;
 
@@ -26,8 +26,7 @@ public final class ChainQuadBuilder {
         void emit(float x, float y, float z, float u, float v, float nx, float ny, float nz);
     }
 
-    private ChainQuadBuilder() {
-    }
+
 
     /**
      * Build and emit all 4 faces for a single chain segment, handling both CROSS and SQUARE vertex shapes,

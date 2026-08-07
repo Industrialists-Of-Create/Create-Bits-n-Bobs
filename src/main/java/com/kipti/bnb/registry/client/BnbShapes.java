@@ -1,5 +1,6 @@
 package com.kipti.bnb.registry.client;
 
+import com.kipti.bnb.content.kinetics.cogwheel_chain.world.CogwheelChainWorld;
 import com.simibubi.create.AllShapes;
 import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.core.Direction;
@@ -78,6 +79,9 @@ public class BnbShapes {
             THROTTLE_LEVER_WALL_SOUTH = cuboid(2, 1, 0, 14, 15, 9),
             THROTTLE_LEVER_WALL_EAST = cuboid(0, 1, 2, 9, 15, 14),
             THROTTLE_LEVER_WALL_WEST = cuboid(7, 1, 2, 16, 15, 14);
+
+    public static final VoxelShaper
+            HEADLAMP_FALLBACK = shape(0, 0, 0, 16, 6, 16).forDirectional();
 
     public static AllShapes.Builder shape(final VoxelShape shape) {
         return new AllShapes.Builder(shape);

@@ -193,12 +193,9 @@ public class PonderflatEditor extends Screen {
     }
 
     private static Block resolveBlock(final String id) {
-        try {
-            final ResourceLocation loc = ResourceLocation.tryParse(id);
-            if (loc != null && BuiltInRegistries.BLOCK.containsKey(loc)) {
-                return BuiltInRegistries.BLOCK.get(loc);
-            }
-        } catch (final Exception ignored) {
+        final ResourceLocation loc = ResourceLocation.tryParse(id);
+        if (loc != null && BuiltInRegistries.BLOCK.containsKey(loc)) {
+            return BuiltInRegistries.BLOCK.get(loc);
         }
         return null;
     }

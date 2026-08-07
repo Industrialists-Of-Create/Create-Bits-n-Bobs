@@ -59,7 +59,7 @@ public record CogwheelChainCandidate(Direction.Axis axis, boolean isLarge, boole
     }
 
     public static @Nullable CogwheelChainCandidate getForBlock(final BlockState state) {
-        if (!isValidCandidate(state))
+        if (state == null || !isValidCandidate(state))
             return null;
         return new CogwheelChainCandidate(getAxis(state), isLargeCogwheel(state), hasSmallCogwheelOffset(state));
     }

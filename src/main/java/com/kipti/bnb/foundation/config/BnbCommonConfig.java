@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.kipti.bnb.registry.core.FeatureCategories.*;
+import static com.kipti.bnb.registry.core.FeatureCategories.BEHAVIOUR;
+import static com.kipti.bnb.registry.core.FeatureCategories.BLOCK;
+import static com.kipti.bnb.registry.core.FeatureCategories.ITEM;
 
 /**
  * Common configuration for Bits 'n' Bobs, containing feature flag toggles.

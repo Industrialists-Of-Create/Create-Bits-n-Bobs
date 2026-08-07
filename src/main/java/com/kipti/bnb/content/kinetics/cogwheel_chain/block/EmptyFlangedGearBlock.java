@@ -5,6 +5,7 @@ import com.kipti.bnb.registry.content.BnbBlockEntities;
 import com.simibubi.create.content.decoration.encasing.EncasableBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
+import com.simibubi.create.content.kinetics.simpleRelays.ICogWheel;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +24,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-public class EmptyFlangedGearBlock extends RotatedPillarKineticBlock implements IBE<KineticBlockEntity>, EncasableBlock, IExclusiveCogwheelChainBlock {
+public class EmptyFlangedGearBlock extends RotatedPillarKineticBlock implements IBE<KineticBlockEntity>, EncasableBlock, ICogWheel, IFlangedCogWheel, IExclusiveCogwheelChainBlock {
 
     final private boolean isLarge;
 

@@ -4,6 +4,7 @@ import com.kipti.bnb.content.kinetics.flywheel_bearing.FlywheelBearingBlockEntit
 import com.kipti.bnb.registry.core.BnbConfigs;
 import com.kipti.bnb.registry.core.BnbTags;
 import com.simibubi.create.content.contraptions.bearing.BearingContraption;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -26,7 +27,24 @@ public class FlywheelMovementMechanics {
 
     public static final float TRANSFER_CAPACITY_PER_ANGULAR_MASS = 5;
 
-    public float maxAngularVelocity = (360f * 64) / (60 * 20);
+    /**
+     * @return stress units per tick per angular mass, from server config {@code flywheelTransferCapacityPerAngularMass} (default 5).
+     */
+    public static float getTransferCapacityPerAngularMass() {
+        return BnbConfigs.server().FLYWHEEL_TRANSFER_CAPACITY_PER_ANGULAR_MASS.getF();
+    }
+
+    /**
+     * @return configured maximum angular velocity in degrees per tick, derived from
+     * {@code flywheelMaxRpmFactor * AllConfigs.server().kinetics.maxRotationSpeed} (default 0.25 * 256 = 64 RPM).
+     */
+    public static float getConfiguredMaxAngularVelocity() {
+        final float factor = BnbConfigs.server().FLYWHEEL_MAX_RPM_FACTOR.getF();
+        final int baseRpm = AllConfigs.server().kinetics.maxRotationSpeed.get();
+        return (360f * baseRpm * factor) / (60 * 20);
+    }
+
+    public float maxAngularVelocity = getConfiguredMaxAngularVelocity();
     public float angularVelocity = 0;
     public float prevClientAngle = 0;
     public float angle = 0;
@@ -82,8 +100,9 @@ public class FlywheelMovementMechanics {
 
         angularVelocity = angularMass <= ANGULAR_MASS_EPSILON ? 0 : (float) Math.sqrt((2f * newKejEnergy) / angularMass);
 
-        if (angularVelocity > maxAngularVelocity) {
-            angularVelocity = maxAngularVelocity;
+        final float configuredMax = getConfiguredMaxAngularVelocity();
+        if (angularVelocity > configuredMax) {
+            angularVelocity = configuredMax;
         }
 
         angle += angularVelocity;
@@ -132,7 +151,7 @@ public class FlywheelMovementMechanics {
     }
 
     public boolean canReceiveStress() {
-        return angularVelocity < maxAngularVelocity;
+        return angularVelocity < getConfiguredMaxAngularVelocity();
     }
 
     public float getStoredStressTicks() {
@@ -141,7 +160,8 @@ public class FlywheelMovementMechanics {
     }
 
     public float getMaxStoredStressTicks() {
-        final float maxKejEnergy = 0.5f * angularMass * maxAngularVelocity * maxAngularVelocity;
+        final float cfgMax = getConfiguredMaxAngularVelocity();
+        final float maxKejEnergy = 0.5f * angularMass * cfgMax * cfgMax;
         return maxKejEnergy * getActualStressUnitsPerKeJoule();
     }
 
@@ -150,7 +170,7 @@ public class FlywheelMovementMechanics {
     }
 
     public float getMaxTransferCapacity() {
-        return Math.max(1, angularMass * TRANSFER_CAPACITY_PER_ANGULAR_MASS);
+        return Math.max(1, angularMass * getTransferCapacityPerAngularMass());
     }
 
     public float getFlywheelStressCapacity() {
@@ -158,7 +178,7 @@ public class FlywheelMovementMechanics {
     }
 
     public float getMaxAngularVelocity() {
-        return maxAngularVelocity;
+        return getConfiguredMaxAngularVelocity();
     }
 
     private float getMassOfBlock(final BlockState state) {

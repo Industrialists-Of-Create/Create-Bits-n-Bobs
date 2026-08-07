@@ -33,7 +33,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -56,7 +55,7 @@ public class HeadlampBlock extends LightBlock implements IBE<HeadlampBlockEntity
         }
 
         final Vec3 location = getPlayerLocationInBlock(pos, placer);
-        withBlockEntityDo(level, pos, (headlampBlockEntity) -> headlampBlockEntity.placeHeadlampIntoBlock(
+        this.withBlockEntityDo(level, pos, (headlampBlockEntity) -> headlampBlockEntity.placeHeadlampIntoBlock(
                 location.subtract(pos.getCenter()), state.getValue(FACING)));
     }
 
@@ -85,21 +84,21 @@ public class HeadlampBlock extends LightBlock implements IBE<HeadlampBlockEntity
         final Level level = pContext.getLevel();
         final BlockPos pos = pContext.getClickedPos();
         final BlockState blockState = level.getBlockState(pos);
-        final HeadlampBlockEntity fpbe = getBlockEntity(level, pos);
+        final HeadlampBlockEntity fpbe = this.getBlockEntity(level, pos);
 
         final Vec3 location = pContext.getClickLocation().subtract(pos.getCenter());
         final Direction facing = stateForPlacement.get().getValue(FACING);
 
         if (blockState.is(this) && fpbe != null) {
             if (!level.isClientSide()) {
-                withBlockEntityDo(level, pos, (headlampBlockEntity) -> {
+                this.withBlockEntityDo(level, pos, (headlampBlockEntity) -> {
                     final boolean placed = headlampBlockEntity
                             .placeHeadlampIntoBlock(location, facing);
                     if (!placed) {
                         stateForPlacement.set(null);
                     }
                 });
-                level.playSound(null, pos, soundType.getPlaceSound(), SoundSource.BLOCKS);
+                level.playSound(null, pos, this.soundType.getPlaceSound(), SoundSource.BLOCKS);
             }
             stateForPlacement.set(blockState);
         }
@@ -110,12 +109,12 @@ public class HeadlampBlock extends LightBlock implements IBE<HeadlampBlockEntity
     protected @NotNull VoxelShape getShape(final BlockState state, @NotNull final BlockGetter level, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
         return level.getBlockEntity(pos) instanceof final HeadlampBlockEntity headlampBlockEntity ?
                 headlampBlockEntity.getShape(state, level, pos, context) :
-                Shapes.block();
+                BnbShapes.HEADLAMP_FALLBACK.get(state.getValue(FACING));
     }
 
     @Override
     public boolean onDestroyedByPlayer(final @NotNull BlockState state, final @NotNull Level level, final @NotNull BlockPos pos, final @NotNull Player player, final boolean willHarvest, final @NotNull FluidState fluid) {
-        final Vec3 location = getPlayerLocationInBlockExact(pos, level, player);
+        final Vec3 location = this.getPlayerLocationInBlockExact(pos, level, player);
         if (!player.isCrouching() && level.getBlockEntity(pos) instanceof final HeadlampBlockEntity headlampBlockEntity &&
                 headlampBlockEntity.removeNearestHeadlamp(location.subtract(pos.getCenter()), state.getValue(FACING))) {
             if (!level.isClientSide && !player.isCreative()) {
@@ -146,7 +145,7 @@ public class HeadlampBlock extends LightBlock implements IBE<HeadlampBlockEntity
             super.onRemove(state, level, pos, newState, movedByPiston);
             return; // Block is being replaced by the same block, do nothing
         }
-        if (level.getBlockEntity(pos) instanceof final HeadlampBlockEntity headlampBlockEntity) {
+        if (!movedByPiston && level.getBlockEntity(pos) instanceof final HeadlampBlockEntity headlampBlockEntity) {
             final ItemStack additionalResources = BnbTrinketBlocks.HEADLAMP.asStack().copyWithCount(Math.clamp(headlampBlockEntity.getExistingPlacements().size() - 1, 0, 3));
             if (!additionalResources.isEmpty())
                 HeadlampBlock.popResource(level, pos, additionalResources);
@@ -202,7 +201,7 @@ public class HeadlampBlock extends LightBlock implements IBE<HeadlampBlockEntity
         final Level world = context.getLevel();
         final BlockPos pos = context.getClickedPos();
         final Player player = context.getPlayer();
-        final Vec3 location = getPlayerLocationInBlockExact(context.getClickedPos(), context.getLevel(), context.getPlayer());
+        final Vec3 location = this.getPlayerLocationInBlockExact(context.getClickedPos(), context.getLevel(), context.getPlayer());
 
         if (!(world instanceof final ServerLevel serverLevel))
             return InteractionResult.SUCCESS;
@@ -218,7 +217,7 @@ public class HeadlampBlock extends LightBlock implements IBE<HeadlampBlockEntity
 
         state.spawnAfterBreak(serverLevel, pos, ItemStack.EMPTY, true);
 
-        withBlockEntityDo(world, pos, (headlampBlockEntity) -> {
+        this.withBlockEntityDo(world, pos, (headlampBlockEntity) -> {
             if (headlampBlockEntity.getExistingPlacements().size() > 1) {
                 headlampBlockEntity.removeNearestHeadlamp(location.subtract(context.getClickedPos().getCenter()), state.getValue(FACING));
             } else {

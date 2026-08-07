@@ -81,7 +81,8 @@ public class BnbEncasedBlockLists {
             casing ->
                     REGISTRATE.block(
                                     casing.asId("encased_flanged_cogwheel"),
-                                    p -> new BnbEncasedEmptyFlangedGearBlock(p, false, casing.getMaterial())
+                                    p -> new BnbEncasedEmptyFlangedGearBlock(p, false, casing.getMaterial(),
+                                            BnbKineticBlocks.SMALL_FLANGED_COGWHEEL::get)
                             )
                             .properties(p -> p.mapColor(MapColor.PODZOL))
                             .transform(BnbBuilderTransformers.casingMaterialCogwheelBase(
@@ -97,7 +98,8 @@ public class BnbEncasedBlockLists {
             casing ->
                     REGISTRATE.block(
                                     casing.asId("encased_large_flanged_cogwheel"),
-                                    p -> new BnbEncasedEmptyFlangedGearBlock(p, true, casing.getMaterial())
+                                    p -> new BnbEncasedEmptyFlangedGearBlock(p, true, casing.getMaterial(),
+                                            BnbKineticBlocks.LARGE_FLANGED_COGWHEEL::get)
                             )
                             .properties(p -> p.mapColor(MapColor.PODZOL))
                             .transform(BnbBuilderTransformers.casingMaterialCogwheelBase(

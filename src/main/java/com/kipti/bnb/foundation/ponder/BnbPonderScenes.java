@@ -2,7 +2,11 @@ package com.kipti.bnb.foundation.ponder;
 
 import com.cake.azimuth.ponder.new_tooltip.NewPonderTooltipManager;
 import com.kipti.bnb.CreateBitsnBobs;
-import com.kipti.bnb.foundation.ponder.scenes.*;
+import com.kipti.bnb.foundation.ponder.scenes.CogwheelChainScenes;
+import com.kipti.bnb.foundation.ponder.scenes.DyedPipeScenes;
+import com.kipti.bnb.foundation.ponder.scenes.DyedTankScenes;
+import com.kipti.bnb.foundation.ponder.scenes.GirderStrutScenes;
+import com.kipti.bnb.foundation.ponder.scenes.NixieDisplayScenes;
 import com.kipti.bnb.registry.content.blocks.BnbKineticBlocks;
 import com.kipti.bnb.registry.content.blocks.BnbTrinketBlocks;
 import com.kipti.bnb.registry.content.blocks.deco.BnbDecorativeBlocks;

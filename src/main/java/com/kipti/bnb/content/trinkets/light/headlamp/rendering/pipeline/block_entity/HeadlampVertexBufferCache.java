@@ -1,7 +1,11 @@
 package com.kipti.bnb.content.trinkets.light.headlamp.rendering.pipeline.block_entity;
 
 import com.kipti.bnb.content.trinkets.light.headlamp.HeadlampBlockEntity;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.ByteBufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.MeshData;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.render.SuperBufferFactory;
 import net.createmod.catnip.render.SuperByteBuffer;
@@ -22,15 +26,14 @@ import java.util.function.Consumer;
  * Entries that have not been accessed within {@value #EXPIRY_TICKS} ticks are evicted.
  * All public methods are thread-safe via synchronization on the internal map.
  */
-public final class HeadlampVertexBufferCache {
+public class HeadlampVertexBufferCache {
 
     private static final int MAX_ENTRIES = 64;
     private static final int EXPIRY_TICKS = 20;
 
     private static final Map<Long, CacheEntry> CACHE = new LinkedHashMap<>(16, 0.75f, false);
 
-    private HeadlampVertexBufferCache() {
-    }
+
 
     /**
      * Retrieves a cached {@link SuperByteBuffer} for the given render state, creating one via the
@@ -131,7 +134,7 @@ public final class HeadlampVertexBufferCache {
         return AnimationTickHolder.getTicks();
     }
 
-    private static final class CacheEntry {
+    private static class CacheEntry {
         final @Nullable SuperByteBuffer buffer;
         volatile long lastAccessTick;
 

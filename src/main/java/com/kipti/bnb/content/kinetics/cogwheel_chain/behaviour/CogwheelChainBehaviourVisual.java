@@ -180,7 +180,7 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
         }
     }
 
-    private static final class CogwheelChainMesh implements QuadMesh {
+    private static class CogwheelChainMesh implements QuadMesh {
 
         private final List<Vertex> vertices;
         private final Vector4fc boundingSphere;
@@ -264,7 +264,7 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
         private record Vertex(float x, float y, float z, float u, float v, float nx, float ny, float nz, int light) {
         }
 
-        private static final class Bounds {
+        private static class Bounds {
             private float minX = Float.POSITIVE_INFINITY;
             private float minY = Float.POSITIVE_INFINITY;
             private float minZ = Float.POSITIVE_INFINITY;

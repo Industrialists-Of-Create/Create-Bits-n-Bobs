@@ -54,7 +54,9 @@ import static com.simibubi.create.api.behaviour.display.DisplayTarget.displayTar
 import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour.interactionBehaviour;
 import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
-import static com.simibubi.create.foundation.data.TagGen.*;
+import static com.simibubi.create.foundation.data.TagGen.axeOnly;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 @IncludeLangDefaults({
         @LangDefault(key = "block.bits_n_bobs.headlamp.tooltip.summary", value = "Can be dyed and placed _multiple times in same block_. Useful for trains or fancy signage too!"),
@@ -92,13 +94,16 @@ public class BnbTrinketBlocks {
             ))
             .build()
             .register();
+
     public static final DyedBlockList<NixieBoardBlockNixie> DYED_NIXIE_BOARD = new DyedBlockList<>(colour -> {
         String colourName = colour.getSerializedName();
         return REGISTRATE.block(colourName + "_nixie_board", p -> new NixieBoardBlockNixie(p, colour))
                 .transform(nixieBoard())
+                .loot((p, b) -> p.dropOther(b, NIXIE_BOARD.get()))
                 .tag(BnbTags.BnbBlockTags.NIXIE_BOARDS.tag)
                 .register();
     });
+
     public static final BlockEntry<LargeNixieTubeBlockNixie> LARGE_NIXIE_TUBE = REGISTRATE.block(
                     "large_nixie_tube",
                     p -> new LargeNixieTubeBlockNixie(
@@ -119,6 +124,7 @@ public class BnbTrinketBlocks {
         String colourName = colour.getSerializedName();
         return REGISTRATE.block(colourName + "_large_nixie_tube", p -> new LargeNixieTubeBlockNixie(p, colour))
                 .transform(largeNixieTube())
+                .loot((p, b) -> p.dropOther(b, LARGE_NIXIE_TUBE.get()))
                 .tag(BnbTags.BnbBlockTags.NIXIE_TUBES.tag)
                 .register();
     });

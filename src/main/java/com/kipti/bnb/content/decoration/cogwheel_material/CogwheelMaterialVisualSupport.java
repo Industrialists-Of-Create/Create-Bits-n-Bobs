@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface CogwheelMaterialVisualSupport {
 
-    final class State {
+    class State {
         @Nullable
         public BlockState lastMaterial;
         @Nullable

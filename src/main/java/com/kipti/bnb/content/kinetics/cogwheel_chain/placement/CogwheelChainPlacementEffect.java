@@ -4,6 +4,7 @@ import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChainCandidat
 import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChainPathfinder;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PlacingCogwheelChain;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PlacingCogwheelNode;
+import com.kipti.bnb.content.kinetics.cogwheel_chain.placement.ChainInteractionFailedException;
 import com.kipti.bnb.registry.core.BnbConfigs;
 import com.simibubi.create.content.equipment.blueprint.BlueprintOverlayRenderer;
 import com.simibubi.create.content.kinetics.chainConveyor.ChainConveyorBlockEntity;
@@ -24,7 +25,12 @@ import java.util.List;
 
 import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.ChainDriveDisplayRenderer.INVALID_COLOUR;
 import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.ChainDriveDisplayRenderer.VALID_COLOUR;
-import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.*;
+import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.clearPlacingChain;
+import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getChainItemInHand;
+import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getCurrentBuildingChain;
+import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getCurrentChainItemType;
+import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getCurrentChainLevel;
+import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getCurrentChainType;
 
 /**
  * Client-side display handler for the normal chain-building placement flow.
@@ -116,13 +122,13 @@ public class CogwheelChainPlacementEffect {
         final @Nullable PlacingCogwheelNode previousNode = getCurrentBuildingChain().getSize() >= 2
             ? getCurrentBuildingChain().getNodes().get(getCurrentBuildingChain().getSize() - 2) : null;
 
-        if (isConnectionValid(lastNode, targetNode, previousNode)) {
+        try {
+            isConnectionValid(lastNode, targetNode, previousNode);
             renderTargetConnection(lastNode, targetNode);
             return targetedPos;
+        } catch (final ChainInteractionFailedException e) {
+            throw new IllegalStateException(e);
         }
-
-        ChainDriveDisplayRenderer.renderParticlesBetween(level, lastNode.center(), targetNode.center(), INVALID_COLOUR);
-        return null;
     }
 
     /**
@@ -147,13 +153,10 @@ public class CogwheelChainPlacementEffect {
 
     private static boolean isConnectionValid(final PlacingCogwheelNode from,
                                              final PlacingCogwheelNode to,
-                                             final @Nullable PlacingCogwheelNode previous) {
-        try {
-            PlacingCogwheelChain.validateConnection(from, to, previous, getCurrentChainType());
-            return true;
-        } catch (final ChainInteractionFailedException ignored) {
-            return false;
-        }
+                                             final @Nullable PlacingCogwheelNode previous)
+            throws ChainInteractionFailedException {
+        PlacingCogwheelChain.validateConnection(from, to, previous, getCurrentChainType());
+        return true;
     }
 
     private static void renderTargetConnection(final PlacingCogwheelNode lastNode,

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "bits_n_bobs:nixie_board"
         }
       ],
       "rolls": 1.0
