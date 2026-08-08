@@ -4,7 +4,6 @@ import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChainCandidat
 import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChainPathfinder;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PlacingCogwheelChain;
 import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.PlacingCogwheelNode;
-import com.kipti.bnb.content.kinetics.cogwheel_chain.placement.ChainInteractionFailedException;
 import com.kipti.bnb.registry.core.BnbConfigs;
 import com.simibubi.create.content.equipment.blueprint.BlueprintOverlayRenderer;
 import com.simibubi.create.content.kinetics.chainConveyor.ChainConveyorBlockEntity;
@@ -25,12 +24,7 @@ import java.util.List;
 
 import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.ChainDriveDisplayRenderer.INVALID_COLOUR;
 import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.ChainDriveDisplayRenderer.VALID_COLOUR;
-import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.clearPlacingChain;
-import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getChainItemInHand;
-import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getCurrentBuildingChain;
-import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getCurrentChainItemType;
-import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getCurrentChainLevel;
-import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.getCurrentChainType;
+import static com.kipti.bnb.content.kinetics.cogwheel_chain.placement.CogwheelChainPlacementInteraction.*;
 
 /**
  * Client-side display handler for the normal chain-building placement flow.
@@ -61,7 +55,7 @@ public class CogwheelChainPlacementEffect {
 
             if (!player.hasInfiniteMaterials()) {
                 final double additionalDistance = targetedPos != null ?
-                    Vec3.atLowerCornerOf(targetedPos.subtract(getCurrentBuildingChain().getLastNode().pos())).length() : 0;
+                        Vec3.atLowerCornerOf(targetedPos.subtract(getCurrentBuildingChain().getLastNode().pos())).length() : 0;
                 final int chainsRequired = getCurrentBuildingChain().getChainsRequired(additionalDistance, getCurrentChainType());
 
                 final boolean hasEnough = ChainConveyorBlockEntity.getChainsFromInventory(player, getCurrentChainItemType().getDefaultInstance(), chainsRequired, true);
@@ -117,17 +111,18 @@ public class CogwheelChainPlacementEffect {
         }
 
         final PlacingCogwheelNode targetNode = new PlacingCogwheelNode(
-            targetedPos, candidate.axis(), candidate.isLarge(), candidate.hasSmallCogwheelOffset()
+                targetedPos, candidate.axis(), candidate.isLarge(), candidate.hasSmallCogwheelOffset()
         );
         final @Nullable PlacingCogwheelNode previousNode = getCurrentBuildingChain().getSize() >= 2
-            ? getCurrentBuildingChain().getNodes().get(getCurrentBuildingChain().getSize() - 2) : null;
+                ? getCurrentBuildingChain().getNodes().get(getCurrentBuildingChain().getSize() - 2) : null;
 
         try {
             isConnectionValid(lastNode, targetNode, previousNode);
             renderTargetConnection(lastNode, targetNode);
             return targetedPos;
-        } catch (final ChainInteractionFailedException e) {
-            throw new IllegalStateException(e);
+        } catch (final ChainInteractionFailedException ignored) {
+            //ChainInteractionFailedException is normal and expected - no swallowed error
+            return null;
         }
     }
 
@@ -172,7 +167,7 @@ public class CogwheelChainPlacementEffect {
         }
 
         final ChainPlacementPathDisplayHelper.DisplayedSegment segment =
-            ChainPlacementPathDisplayHelper.getDisplayedSegment(lastNode, targetNode, lastSide, targetSide);
+                ChainPlacementPathDisplayHelper.getDisplayedSegment(lastNode, targetNode, lastSide, targetSide);
         ChainDriveDisplayRenderer.renderConnectionSegment("cogwheel_chain_target_connection", segment, VALID_COLOUR);
     }
 
@@ -196,10 +191,10 @@ public class CogwheelChainPlacementEffect {
         final Vec3 fromOffset = fromSide == 0 ? Vec3.ZERO : CogwheelChainPathfinder.getPathingTangentOnCog(nodeB, nodeA, -fromSide);
         final Vec3 toOffset = toSide == 0 ? Vec3.ZERO : CogwheelChainPathfinder.getPathingTangentOnCog(nodeA, nodeB, toSide);
         ChainDriveDisplayRenderer.renderConnectionLine(
-            "cogwheel_chain_placement_pathing_" + nodeA.pos() + "_" + nodeB.pos() + "_from_" + fromSide + "_to_" + toSide,
-            nodeA.center().add(fromOffset),
-            nodeB.center().add(toOffset),
-            VALID_COLOUR
+                "cogwheel_chain_placement_pathing_" + nodeA.pos() + "_" + nodeB.pos() + "_from_" + fromSide + "_to_" + toSide,
+                nodeA.center().add(fromOffset),
+                nodeB.center().add(toOffset),
+                VALID_COLOUR
         );
     }
 
