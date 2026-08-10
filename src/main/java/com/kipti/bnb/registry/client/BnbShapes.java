@@ -1,6 +1,5 @@
 package com.kipti.bnb.registry.client;
 
-import com.kipti.bnb.content.kinetics.cogwheel_chain.world.CogwheelChainWorld;
 import com.simibubi.create.AllShapes;
 import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.core.Direction;
@@ -24,10 +23,11 @@ public class BnbShapes {
             .add(cuboid(4, 5, 4, 12, 14, 12))
             .forDirectional();
 
-    public static final VoxelShaper BRASS_LAMP_SHAPE = shape(1, 0, 1, 15, 3, 15)
-            .add(cuboid(2, 3, 2, 14, 10, 14))
-            .add(cuboid(3, 10, 3, 13, 13, 13))
-            .add(cuboid(5, 13, 5, 11, 15, 11))
+    public static final VoxelShaper BRASS_LAMP_SHAPE = shape(1, 1, 1, 15, 4, 15)
+            .add(cuboid(2, 4, 2, 14, 11, 14))
+            .add(cuboid(3, 11, 3, 13, 14, 13))
+            .add(cuboid(5, 14, 5, 11, 16, 11))
+            .add(cuboid(6, 0, 6, 10, 1, 10))
             .forDirectional();
 
     public static final VoxelShaper NIXIE_BOARD_SIDE = shape(7, 0, 0, 9, 19, 16)

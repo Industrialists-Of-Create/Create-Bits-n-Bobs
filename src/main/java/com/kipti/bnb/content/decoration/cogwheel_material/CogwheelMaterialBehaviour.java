@@ -114,6 +114,11 @@ public class CogwheelMaterialBehaviour extends SuperBlockEntityBehaviour {
     }
 
     @Override
+    public boolean isSafeNBT() {
+        return true;
+    }
+
+    @Override
     public BehaviourType<?> getType() {
         return TYPE;
     }

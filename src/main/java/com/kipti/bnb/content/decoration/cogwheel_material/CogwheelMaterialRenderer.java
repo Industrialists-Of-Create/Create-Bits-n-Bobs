@@ -1,6 +1,7 @@
 package com.kipti.bnb.content.decoration.cogwheel_material;
 
 import com.hlysine.create_connected.registries.CCPartialModels;
+import com.kipti.bnb.registry.client.BnbPartialModels;
 import com.kipti.bnb.registry.core.BnbTags;
 import com.pedrorok.hypertube.registry.ModPartialModels;
 import com.simibubi.create.AllPartialModels;
@@ -19,6 +20,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -119,10 +121,11 @@ public class CogwheelMaterialRenderer {
     }
 
     public static Variant getVariant(final BlockState blockState) {
-        return BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.matches(blockState) ? Variant.COGWHEEL :
-                BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.matches(blockState) ? Variant.SHAFTLESS_LARGE_COGWHEEL :
-                        BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.matches(blockState) ? Variant.SHAFTLESS_COGWHEEL :
-                                getMiscVariant(blockState);
+        for (final Variant variant : Variant.values()) {
+            if (variant.matches(blockState))
+                return variant;
+        }
+        return getMiscVariant(blockState);
     }
 
     private static Variant getMiscVariant(final BlockState blockState) {
@@ -146,17 +149,31 @@ public class CogwheelMaterialRenderer {
     }
 
     public enum Variant {
-        COGWHEEL(() -> AllPartialModels.COGWHEEL),
-        SHAFTLESS_COGWHEEL(() -> AllPartialModels.SHAFTLESS_COGWHEEL),
-        SHAFTLESS_LARGE_COGWHEEL(() -> AllPartialModels.SHAFTLESS_LARGE_COGWHEEL),
+        COGWHEEL(BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.tag, () -> AllPartialModels.COGWHEEL),
+        SHAFTLESS_COGWHEEL(BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.tag, () -> AllPartialModels.SHAFTLESS_COGWHEEL),
+        SHAFTLESS_LARGE_COGWHEEL(BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.tag, () -> AllPartialModels.SHAFTLESS_LARGE_COGWHEEL),
+        FLANGED_COGWHEEL(BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_FLANGED_COGWHEEL_MODEL.tag, () -> BnbPartialModels.SMALL_FLANGED_COGWHEEL_BLOCK),
+        LARGE_FLANGED_COGWHEEL(BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_LARGE_FLANGED_COGWHEEL_MODEL.tag, () -> BnbPartialModels.LARGE_FLANGED_COGWHEEL_BLOCK),
+        ENCASED_FLANGED_COGWHEEL(BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_ENCASED_FLANGED_COGWHEEL_MODEL.tag, () -> BnbPartialModels.ENCASED_FLANGED_COGWHEEL_BLOCK),
+        ENCASED_LARGE_FLANGED_COGWHEEL(BnbTags.BnbBlockTags.COGWHEEL_MATERIAL_ENCASED_LARGE_FLANGED_COGWHEEL_MODEL.tag, () -> BnbPartialModels.ENCASED_LARGE_FLANGED_COGWHEEL_BLOCK),
         SHAFTLESS_COGWHEEL_HOLE(() -> ModPartialModels.COGWHEEL_HOLE),
         CRANK_WHEEL_COGWHEEL(() -> CCPartialModels.CRANK_WHEEL_BASE),
         LARGE_CRANK_WHEEL_COGWHEEL(() -> CCPartialModels.LARGE_CRANK_WHEEL_BASE);
 
+        private final @Nullable TagKey<Block> tag;
         private final Supplier<PartialModel> partial;
 
-        Variant(final Supplier<PartialModel> partial) {
+        Variant(@Nullable final TagKey<Block> tag, final Supplier<PartialModel> partial) {
+            this.tag = tag;
             this.partial = partial;
+        }
+
+        Variant(final Supplier<PartialModel> partial) {
+            this(null, partial);
+        }
+
+        private boolean matches(final BlockState state) {
+            return this.tag != null && state.is(this.tag);
         }
 
         public BakedModel model() {

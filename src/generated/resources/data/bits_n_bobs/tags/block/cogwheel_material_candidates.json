@@ -3,6 +3,10 @@
     "#bits_n_bobs:cogwheel_material_cogwheel_model",
     "#bits_n_bobs:cogwheel_material_shaftless_cogwheel_model",
     "#bits_n_bobs:cogwheel_material_shaftless_large_cogwheel_model",
+    "#bits_n_bobs:cogwheel_material_flanged_cogwheel_model",
+    "#bits_n_bobs:cogwheel_material_large_flanged_cogwheel_model",
+    "#bits_n_bobs:cogwheel_material_encased_flanged_cogwheel_model",
+    "#bits_n_bobs:cogwheel_material_encased_large_flanged_cogwheel_model",
     {
       "id": "create_connected:crank_wheel",
       "required": false

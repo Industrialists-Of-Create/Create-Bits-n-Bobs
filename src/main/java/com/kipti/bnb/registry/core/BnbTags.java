@@ -64,10 +64,17 @@ public class BnbTags {
         EXTRA_COGWHEEL_CHAIN_CANDIDATES,
         DEDICATED_COGWHEEL_CHAIN_COMPONENT,
 
+        ENCASED_FLANGED_COGWHEEL,
+        ENCASED_LARGE_FLANGED_COGWHEEL,
+
         COGWHEEL_MATERIAL_CANDIDATES,
         COGWHEEL_MATERIAL_COGWHEEL_MODEL,
         COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL,
         COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL,
+        COGWHEEL_MATERIAL_FLANGED_COGWHEEL_MODEL,
+        COGWHEEL_MATERIAL_LARGE_FLANGED_COGWHEEL_MODEL,
+        COGWHEEL_MATERIAL_ENCASED_FLANGED_COGWHEEL_MODEL,
+        COGWHEEL_MATERIAL_ENCASED_LARGE_FLANGED_COGWHEEL_MODEL,
 
         //For checking blocks that may be dyeable in both BnB OR BnD
         DYEABLE_FLUID_TANK;
@@ -127,6 +134,10 @@ public class BnbTags {
                     .addTag(BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.tag)
                     .addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_COGWHEEL_MODEL.tag)
                     .addTag(BnbBlockTags.COGWHEEL_MATERIAL_SHAFTLESS_LARGE_COGWHEEL_MODEL.tag)
+                    .addTag(BnbBlockTags.COGWHEEL_MATERIAL_FLANGED_COGWHEEL_MODEL.tag)
+                    .addTag(BnbBlockTags.COGWHEEL_MATERIAL_LARGE_FLANGED_COGWHEEL_MODEL.tag)
+                    .addTag(BnbBlockTags.COGWHEEL_MATERIAL_ENCASED_FLANGED_COGWHEEL_MODEL.tag)
+                    .addTag(BnbBlockTags.COGWHEEL_MATERIAL_ENCASED_LARGE_FLANGED_COGWHEEL_MODEL.tag)
                     .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "crank_wheel"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "large_crank_wheel"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_entrance"))
@@ -188,6 +199,18 @@ public class BnbTags {
                     .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "industrial_iron_encased_large_cogwheel"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "weathered_iron_encased_large_cogwheel"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", "zinc_encased_large_cogwheel"));
+
+            prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_FLANGED_COGWHEEL_MODEL.tag)
+                    .add(BnbKineticBlocks.SMALL_FLANGED_COGWHEEL.getKey());
+
+            prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_LARGE_FLANGED_COGWHEEL_MODEL.tag)
+                    .add(BnbKineticBlocks.LARGE_FLANGED_COGWHEEL.getKey());
+
+            prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_ENCASED_FLANGED_COGWHEEL_MODEL.tag)
+                    .addTag(BnbBlockTags.ENCASED_FLANGED_COGWHEEL.tag);
+
+            prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_ENCASED_LARGE_FLANGED_COGWHEEL_MODEL.tag)
+                    .addTag(BnbBlockTags.ENCASED_LARGE_FLANGED_COGWHEEL.tag);
         });
 
         CreateBitsnBobs.REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> {

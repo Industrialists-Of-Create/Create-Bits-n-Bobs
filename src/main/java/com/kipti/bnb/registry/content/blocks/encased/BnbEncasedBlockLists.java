@@ -93,6 +93,7 @@ public class BnbEncasedBlockLists {
                             .transform(EncasingRegistry.addVariantTo(BnbKineticBlocks.SMALL_FLANGED_COGWHEEL))
                             .onRegister(GenericBlockEntityRenderModels.model(BnbPartialModels.ENCASED_FLANGED_COGWHEEL_BLOCK))
                             .tag(BnbTags.BnbBlockTags.COGWHEEL_CHAIN_NO_SMALL_OFFSET.tag)
+                            .tag(BnbTags.BnbBlockTags.ENCASED_FLANGED_COGWHEEL.tag)
                             .register());
     public static final EncasedBlockList<BnbEncasedEmptyFlangedGearBlock> ENCASED_LARGE_FLANGED_COGWHEEL = new EncasedBlockList<>(
             casing ->
@@ -110,6 +111,7 @@ public class BnbEncasedBlockLists {
                             .transform(EncasingRegistry.addVariantTo(BnbKineticBlocks.LARGE_FLANGED_COGWHEEL))
                             .onRegister(GenericBlockEntityRenderModels.model(BnbPartialModels.ENCASED_LARGE_FLANGED_COGWHEEL_BLOCK))
                             .tag(BnbTags.BnbBlockTags.COGWHEEL_CHAIN_NO_SMALL_OFFSET.tag)
+                            .tag(BnbTags.BnbBlockTags.ENCASED_LARGE_FLANGED_COGWHEEL.tag)
                             .register());
 
     public static void register() {

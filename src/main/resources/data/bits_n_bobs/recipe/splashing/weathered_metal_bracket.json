@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "bits_n_bobs:feature_item_enabled",
+      "item": "bits_n_bobs:weathered_metal_bracket"
+    }
+  ],
+  "type": "create:splashing",
+  "ingredients": [
+    {
+      "item": "create:metal_bracket"
+    }
+  ],
+  "results": [
+    {
+      "id": "bits_n_bobs:weathered_metal_bracket"
+    }
+  ]
+}

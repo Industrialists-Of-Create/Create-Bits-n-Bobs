@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -18,20 +17,10 @@ import java.util.Set;
  */
 public class BnbMixinPlugin implements IMixinConfigPlugin {
 
-    /**
-     * Optional-mod target classes, keyed by mixin class and then by target class name, mapping each to the mod id
-     * it comes from. Targets not listed here are always applied.
-     */
-    private static final Map<String, Map<String, String>> OPTIONAL_TARGETS = Map.of(
-            "com.kipti.bnb.mixin.cogwheel_material.CogwheelMaterialVisualMixin", Map.of(
-                    "dev.khloeleclair.create.additionallogistics.client.content.kinetics.lazy.LazyCogVisual", "createadditionallogistics"),
-            "com.kipti.bnb.mixin.cogwheel_material.createadditionallogistics.PackageAcceleratorVisualMixin", Map.of(
-                    "dev.khloeleclair.create.additionallogistics.client.content.logistics.packageAccelerator.PackageAcceleratorVisual", "createadditionallogistics"),
-            "com.kipti.bnb.mixin.cogwheel_material.create_connected.CrankWheelVisualMixin", Map.of(
-                    "com.hlysine.create_connected.content.crankwheel.CrankWheelVisual", "create_connected"),
-            "com.kipti.bnb.mixin.compat.createcasing.ItemChangeBlockManagerMixin", Map.of(
-                    "fr.iglee42.createcasing.utils.ItemChangeBlockManager", "createcasing")
-    );
+    private static final String COMPAT_PACKAGE = "com.kipti.bnb.mixin.compat";
+    private static final String[] COMPAT_MOD_IDS = {
+            "create_connected", "createadditionallogistics", "createcasing"
+    };
 
     @Override
     public void onLoad(final String mixinPackage) {
@@ -44,9 +33,15 @@ public class BnbMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(final String targetClassName, final String mixinClassName) {
-        final String modId = OPTIONAL_TARGETS.getOrDefault(mixinClassName, Map.of())
-                .get(targetClassName);
-        return modId == null || isModLoaded(modId);
+        if (mixinClassName.startsWith(COMPAT_PACKAGE)) {
+            final String compatPackageSubpath = mixinClassName.substring(COMPAT_PACKAGE.length() + 1);
+            for (final String modId : COMPAT_MOD_IDS) {
+                if (compatPackageSubpath.contains(modId)) {
+                    return isModLoaded(modId);
+                }
+            }
+        }
+        return true;
     }
 
     @Override

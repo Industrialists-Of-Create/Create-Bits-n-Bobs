@@ -288,6 +288,7 @@
 
 - 2.0.0 stable release!
 - Added cogwheel materials, allowing you to change the wood type of cogwheels
+- Updated the model for flanged cogwheels to allow them to have cogwheel materials
 - Added flanged cogwheel connectivity, flanged cogwheels can connect to other cogwheels but not other flanged cogwheels.
 - Added cogwheel material compat to:
   Create: Connected, Create: Slice 'n' Dice, Create: Hypertubes, Create: Additional Logistics, Create: Encased
@@ -295,3 +296,6 @@
 - Fixed excessively large headlamp shape with sable
 - Fixed an issue where dyed nixie blocks would not drop anything
 - Fixed flanged cogwheels turning into normal cogwheels when being unencased
+- Fixed brass lamp model
+- Fixed weathered metal bracket not having a recipe
+- Added weathered metal girder to #railways:semaphore_poles tags
