@@ -37,7 +37,7 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="azimuth"
 type="required"
-versionRange="[1.2.0,)"
+versionRange="[1.4.5,)"
 ordering="AFTER"
 side="BOTH"
 
@@ -55,7 +55,21 @@ ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
+modId="dndecor"
+type="optional"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
 modId="create_connected"
 type="optional"
 ordering="AFTER"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="tfmg"
+type="incompatible"
+reason="This mod is incompatible with TMFG that isnt 1.2.2c or version >1.2.2, you can download download 1.2.2c JAR from Bits 'n' Bobs page"
+ordering="AFTER"
+versionRange="(,1.2.2]"
 side="BOTH"

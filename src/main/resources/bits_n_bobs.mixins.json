@@ -19,6 +19,7 @@
     "ServerEntityMixin",
     "ServerGamePacketListenerImplAccessor",
     "chair.ContraptionMixin",
+    "compat.cogwheel_material.createadditionallogistics.CogwheelMaterialVisualMixin",
     "compat.cogwheel_material.createcasing.CreativeCogwheelVisualMixin",
     "compat.createcasing.ItemChangeBlockManagerMixin",
     "dyeable.fluid_tank.ConnectivityHandlerMixin",

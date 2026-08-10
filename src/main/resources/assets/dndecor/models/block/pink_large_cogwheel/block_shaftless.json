@@ -1,0 +1,7 @@
+{
+  "parent": "bits_n_bobs:block/default_large_cogwheel_shaftless",
+  "textures": {
+    "4": "dndecor:block/large_dark_metal_cogwheel/pink",
+    "particle": "dndecor:block/large_dark_metal_cogwheel/pink"
+  }
+}

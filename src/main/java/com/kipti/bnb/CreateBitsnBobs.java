@@ -7,12 +7,7 @@ import com.kipti.bnb.content.kinetics.cogwheel_chain.types.BnbCogwheelChainTypes
 import com.kipti.bnb.network.BnbPackets;
 import com.kipti.bnb.registry.azimuth.BnbBehaviourApplicators;
 import com.kipti.bnb.registry.compat.BnbCreateStresses;
-import com.kipti.bnb.registry.content.BnbAdvancements;
-import com.kipti.bnb.registry.content.BnbBlockEntities;
-import com.kipti.bnb.registry.content.BnbBlocksBootstrap;
-import com.kipti.bnb.registry.content.BnbContraptionTypes;
-import com.kipti.bnb.registry.content.BnbEntityTypes;
-import com.kipti.bnb.registry.content.BnbItems;
+import com.kipti.bnb.registry.content.*;
 import com.kipti.bnb.registry.core.BnbConfigs;
 import com.kipti.bnb.registry.core.BnbDataComponents;
 import com.kipti.bnb.registry.core.BnbTags;
@@ -30,6 +25,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -53,11 +49,14 @@ public class CreateBitsnBobs {
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID)
             .defaultCreativeTab((ResourceKey<CreativeModeTab>) null)
             .setTooltipModifierFactory(item ->
-                                               new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
-                                                       .andThen(TooltipModifier.mapNull(KineticStats.create(item)))
+                    new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
+                            .andThen(TooltipModifier.mapNull(KineticStats.create(item)))
             );
 
     public CreateBitsnBobs(final IEventBus modEventBus, final ModContainer modContainer) {
+        warnAboutCogwheelAssetReplacement("dndecor", "Design n' Decor");
+        warnAboutCogwheelAssetReplacement("createcasing", "Create Encased");
+
         modEventBus.addListener(CreateBitsnBobsData::gatherData);
         final ModLoadingContext modLoadingContext = ModLoadingContext.get();
 
@@ -101,6 +100,12 @@ public class CreateBitsnBobs {
 
     public static ResourceLocation asResource(final String s) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, s);
+    }
+
+    private static void warnAboutCogwheelAssetReplacement(final String modId, final String modName) {
+        if (ModList.get().isLoaded(modId)) {
+            LOGGER.warn("Bits 'n' bobs is replacing assets inside {} with ones using the default cogwheel model instead of the modified cogwheel model, this may cause some visual inconsitency!", modName);
+        }
     }
 
 }

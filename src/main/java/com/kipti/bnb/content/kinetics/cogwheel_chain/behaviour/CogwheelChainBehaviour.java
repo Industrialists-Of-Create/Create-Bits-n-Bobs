@@ -163,7 +163,9 @@ public class CogwheelChainBehaviour extends SuperBlockEntityBehaviour implements
                 this.controllerOffset == null ? Vec3i.ZERO : this.controllerOffset
         );
         final CogwheelChainCandidate replacingCandidate = CogwheelChainCandidate.getForBlock(replacingState);
-        if (replacingCandidate == null || thisNode == null || !replacingCandidate.isConsistentWithNode(thisNode))
+        if (replacingCandidate == null || thisNode == null ||
+                !replacingCandidate.isConsistentWithNode(thisNode) ||
+                controllerBehaviour.getControlledChain().getChainType().getCogwheelPredicate().test(replacingState.getBlock()))
             return false;
 
         final BlockEntity replacingBlockEntity = this.getLevel().getBlockEntity(this.getPos());

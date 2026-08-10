@@ -1,8 +1,10 @@
 package com.kipti.bnb.content.kinetics.cogwheel_chain.types;
 
+import com.cake.azimuth.lang.IncludeLangDefaults;
+import com.cake.azimuth.lang.LangDefault;
 import com.kipti.bnb.CreateBitsnBobs;
-import com.kipti.bnb.registry.content.blocks.BnbKineticBlocks;
 import com.kipti.bnb.registry.core.BnbRegistries;
+import com.kipti.bnb.registry.core.BnbTags;
 import com.simibubi.create.AllItems;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
@@ -10,6 +12,12 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+@IncludeLangDefaults(
+        value = {
+                @LangDefault(key = "message.bits_n_bobs.cogwheel_chain.chain_addition_aborted.invalid_cogwheel_type.cogwheel_chain_type.bits_n_bobs.belt", value = "Belt cogwheel drives must be placed on a flanged cogwheel"),
+                @LangDefault(key = "message.bits_n_bobs.cogwheel_chain.chain_addition_aborted.invalid_cogwheel_type.cogwheel_chain_type.bits_n_bobs.rope", value = "Rope cogwheel drives must be placed on a flanged cogwheel")
+        }
+)
 public class BnbCogwheelChainTypes {
 
     public static final DeferredRegister<CogwheelChainType> REGISTRY = DeferredRegister.create(BnbRegistries.COGWHEEL_CHAIN_TYPES, CreateBitsnBobs.MOD_ID);
@@ -25,7 +33,7 @@ public class BnbCogwheelChainTypes {
                     .renderType(CogwheelChainType.ChainRenderInfo.BELT)
                     .renderTexture(CreateBitsnBobs.asResource("textures/block/chain_belt.png"))
                     .breakEffectsBlock(() -> Blocks.CHAIN)
-                    .setCogwheelPredicate((block) -> BnbKineticBlocks.LARGE_FLANGED_COGWHEEL.get() == block || BnbKineticBlocks.SMALL_FLANGED_COGWHEEL.get() == block) //TODO: tag
+                    .setCogwheelPredicate(BnbTags.BnbBlockTags.FLANGED_COGWHEEL::matches)
                     .permitsAxisChange(false)
                     .build());
 
@@ -35,7 +43,7 @@ public class BnbCogwheelChainTypes {
                     .renderType(CogwheelChainType.ChainRenderInfo.ROPE)
                     .renderTexture(CreateBitsnBobs.asResource("textures/block/chain_rope.png"))
                     .breakEffectsBlock(() -> Blocks.CHAIN)
-                    .setCogwheelPredicate((block) -> BnbKineticBlocks.LARGE_FLANGED_COGWHEEL.get() == block || BnbKineticBlocks.SMALL_FLANGED_COGWHEEL.get() == block) //TODO: tag
+                    .setCogwheelPredicate(BnbTags.BnbBlockTags.FLANGED_COGWHEEL::matches)
                     .build());
 
 

@@ -64,6 +64,10 @@ public class BnbTags {
         EXTRA_COGWHEEL_CHAIN_CANDIDATES,
         DEDICATED_COGWHEEL_CHAIN_COMPONENT,
 
+        FLANGED_COGWHEEL,
+        LARGE_FLANGED_COGWHEEL,
+        SMALL_FLANGED_COGWHEEL,
+
         ENCASED_FLANGED_COGWHEEL,
         ENCASED_LARGE_FLANGED_COGWHEEL,
 
@@ -211,6 +215,18 @@ public class BnbTags {
 
             prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_ENCASED_LARGE_FLANGED_COGWHEEL_MODEL.tag)
                     .addTag(BnbBlockTags.ENCASED_LARGE_FLANGED_COGWHEEL.tag);
+
+            prov.addTag(BnbBlockTags.SMALL_FLANGED_COGWHEEL.tag)
+                    .addTag(BnbBlockTags.ENCASED_FLANGED_COGWHEEL.tag)
+                    .add(BnbKineticBlocks.SMALL_FLANGED_COGWHEEL.getKey());
+
+            prov.addTag(BnbBlockTags.LARGE_FLANGED_COGWHEEL.tag)
+                    .addTag(BnbBlockTags.ENCASED_LARGE_FLANGED_COGWHEEL.tag)
+                    .add(BnbKineticBlocks.LARGE_FLANGED_COGWHEEL.getKey());
+            
+            prov.addTag(BnbBlockTags.FLANGED_COGWHEEL.tag)
+                    .addTag(BnbBlockTags.SMALL_FLANGED_COGWHEEL.tag)
+                    .addTag(BnbBlockTags.LARGE_FLANGED_COGWHEEL.tag);
         });
 
         CreateBitsnBobs.REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> {

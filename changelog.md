@@ -299,3 +299,15 @@
 - Fixed brass lamp model
 - Fixed weathered metal bracket not having a recipe
 - Added weathered metal girder to #railways:semaphore_poles tags
+
+# 1.21.1-2.2.1
+
+- Added waterlog functionality to industrial grating
+- Fixed encased flanged cogwheels not working for belt drives
+- Untag as beta
+
+# 1.21.1-2.2.2
+
+- Added proper incompatibility warning for incompatible TMFG version
+- Fixed mixin issue when loading without an optional compat
+- Potentially fixed cogwheel material and fluid dying mechanics not working

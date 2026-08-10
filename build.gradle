@@ -5,7 +5,7 @@ plugins {
     id 'maven-publish'
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.140'
-    id 'me.modmuss50.mod-publish-plugin' version '1.1.0'
+    id 'me.modmuss50.mod-publish-plugin' version '2.1.1'
 }
 
 def isSnapshotVersioning = project.hasProperty('snapshot_versioning') && project.property('snapshot_versioning').toString().toBoolean()
@@ -164,12 +164,21 @@ dependencies {
     //implementation("com.cake.autoload:autoload-neoforge-1.21.1:1.+")
 
     // Actual compats here:
-    implementation("maven.modrinth:create-connected:${create_connected_version}")
-    implementation("maven.modrinth:slice-and-dice:${create_slice_and_dice_version}")
-    implementation("maven.modrinth:hypertube:${create_hypertube_version}")
-    implementation("maven.modrinth:create-additional-logistics:${createadditionallogistics_version}")
-    implementation("maven.modrinth:create-encased:${create_encased_version}")
-    implementation("thedarkcolour:kotlinforforge-neoforge:${kotlin_for_forge_version}")
+//    implementation("maven.modrinth:create-connected:${create_connected_version}")
+//    implementation("maven.modrinth:slice-and-dice:${create_slice_and_dice_version}")
+//    implementation("maven.modrinth:hypertube:${create_hypertube_version}")
+//    implementation("maven.modrinth:create-additional-logistics:${createadditionallogistics_version}")
+//    implementation("maven.modrinth:create-encased:${create_encased_version}")
+//    implementation("maven.modrinth:create-design-n-decor:${dndecor_version}")
+//    implementation("thedarkcolour:kotlinforforge-neoforge:${kotlin_for_forge_version}")
+    
+    compileOnly("maven.modrinth:create-connected:${create_connected_version}")
+    compileOnly("maven.modrinth:slice-and-dice:${create_slice_and_dice_version}")
+    compileOnly("maven.modrinth:hypertube:${create_hypertube_version}")
+    compileOnly("maven.modrinth:create-additional-logistics:${createadditionallogistics_version}")
+    compileOnly("maven.modrinth:create-encased:${create_encased_version}")
+    compileOnly("maven.modrinth:create-design-n-decor:${dndecor_version}")
+    compileOnly("thedarkcolour:kotlinforforge-neoforge:${kotlin_for_forge_version}")
 
     jarJar(api("dev.ryanhcode.sable-companion:sable-companion-common-${project.minecraft_version}:[${project.sable_companion_version},)")) {
         version {
@@ -267,7 +276,7 @@ publishMods {
     file = jar.archiveFile
     def changelogText = getRelevantChangelog(minecraft_version + "-" + mod_version)
     changelog = changelogText
-    type = BETA
+    type = STABLE
     modLoaders.add("neoforge")
     displayName = "${mod_name} BETA ${mod_version} NeoForge ${minecraft_version}"
 
