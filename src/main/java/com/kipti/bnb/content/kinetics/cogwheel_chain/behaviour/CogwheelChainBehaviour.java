@@ -162,7 +162,7 @@ public class CogwheelChainBehaviour extends SuperBlockEntityBehaviour implements
         // getControlledChain() may return null. pucgenie: idk why exactly, but it really happens in skies2 aero 1.6.0 https://mclo.gs/Oce6yL8
         final PathedCogwheelNode thisNode = java.util.Optional.ofNullable(controllerBehaviour.getControlledChain()).map(controlledChain -> controlledChain.getNodeFromControllerOffset(
                 this.controllerOffset == null ? Vec3i.ZERO : this.controllerOffset
-        ));
+        )).orElse(null);
         final CogwheelChainCandidate replacingCandidate = CogwheelChainCandidate.getForBlock(replacingState);
         if (replacingCandidate == null || thisNode == null ||
                 !replacingCandidate.isConsistentWithNode(thisNode) ||
