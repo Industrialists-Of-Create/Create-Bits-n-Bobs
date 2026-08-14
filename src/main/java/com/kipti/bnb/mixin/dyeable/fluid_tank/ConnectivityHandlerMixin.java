@@ -1,9 +1,9 @@
 package com.kipti.bnb.mixin.dyeable.fluid_tank;
 
+import com.kipti.bnb.content.decoration.dyeable.BaseDyeableBehaviour;
+import com.kipti.bnb.content.decoration.dyeable.DyeableMultiblockTypes;
 import com.kipti.bnb.content.decoration.dyeable.DyeableTransitionHelper;
-import com.kipti.bnb.content.decoration.dyeable.tanks.DyeableTankBehaviour;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockGetter;
@@ -30,16 +30,11 @@ public class ConnectivityHandlerMixin {
 
     @Inject(method = "formMulti(Lnet/minecraft/world/level/block/entity/BlockEntity;)V", at = @At("HEAD"))
     private static void bnb$captureFormationColor(final BlockEntity be, final CallbackInfo ci) {
-        final DyeableTankBehaviour behaviour = BlockEntityBehaviour.get(
-                be.getLevel(),
-                be.getBlockPos(),
-                DyeableTankBehaviour.TYPE
-        );
-        if (behaviour == null) {
+        if (DyeableMultiblockTypes.get(be.getLevel(), be.getBlockPos()) == null) {
             return;
         }
         BNB_IN_FORMATION.set(Boolean.TRUE);
-        BNB_FORMATION_COLOR.set(bnb$getEffectiveTankColor(be));
+        BNB_FORMATION_COLOR.set(bnb$getEffectiveDyeableColor(be));
     }
 
     @Inject(method = "formMulti(Lnet/minecraft/world/level/block/entity/BlockEntity;)V", at = @At("RETURN"))
@@ -62,7 +57,7 @@ public class ConnectivityHandlerMixin {
         if (result == null) {
             return;
         }
-        final @Nullable DyeColor candidateColor = bnb$getEffectiveTankColor(result);
+        final @Nullable DyeColor candidateColor = bnb$getEffectiveDyeableColor(result);
         final @Nullable DyeColor formationColor = BNB_FORMATION_COLOR.get();
         if (!Objects.equals(candidateColor, formationColor)) {
             cir.setReturnValue(null);
@@ -71,12 +66,8 @@ public class ConnectivityHandlerMixin {
 
     @Unique
     @Nullable
-    private static DyeColor bnb$getEffectiveTankColor(final BlockEntity be) {
-        final DyeableTankBehaviour behaviour = BlockEntityBehaviour.get(
-                be.getLevel(),
-                be.getBlockPos(),
-                DyeableTankBehaviour.TYPE
-        );
+    private static DyeColor bnb$getEffectiveDyeableColor(final BlockEntity be) {
+        final BaseDyeableBehaviour behaviour = DyeableMultiblockTypes.get(be.getLevel(), be.getBlockPos());
         if (behaviour != null && behaviour.getColor() != null) {
             return behaviour.getColor();
         }

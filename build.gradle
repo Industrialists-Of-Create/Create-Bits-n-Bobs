@@ -171,7 +171,7 @@ dependencies {
 //    implementation("maven.modrinth:create-encased:${create_encased_version}")
 //    implementation("maven.modrinth:create-design-n-decor:${dndecor_version}")
 //    implementation("thedarkcolour:kotlinforforge-neoforge:${kotlin_for_forge_version}")
-    
+
     compileOnly("maven.modrinth:create-connected:${create_connected_version}")
     compileOnly("maven.modrinth:slice-and-dice:${create_slice_and_dice_version}")
     compileOnly("maven.modrinth:hypertube:${create_hypertube_version}")
@@ -278,7 +278,7 @@ publishMods {
     changelog = changelogText
     type = STABLE
     modLoaders.add("neoforge")
-    displayName = "${mod_name} BETA ${mod_version} NeoForge ${minecraft_version}"
+    displayName = "${mod_name} ${mod_version} NeoForge ${minecraft_version}"
 
     curseforge {
         projectId = "1398383"

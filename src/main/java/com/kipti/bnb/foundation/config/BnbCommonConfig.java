@@ -1,6 +1,8 @@
 package com.kipti.bnb.foundation.config;
 
 import com.google.common.collect.ImmutableMap;
+import com.kipti.bnb.CreateBitsnBobs;
+import com.kipti.bnb.foundation.BnbSuppression;
 import com.kipti.bnb.registry.core.BnbFeatureFlag;
 import com.kipti.bnb.registry.core.FeatureCategories;
 import net.createmod.catnip.config.ConfigBase;
@@ -89,10 +91,16 @@ public class BnbCommonConfig extends ConfigBase {
 
     @Override
     public void onLoad() {
+        warnIfSuppressingContent();
     }
 
     @Override
     public void onReload() {
+        warnIfSuppressingContent();
+    }
+
+    private static void warnIfSuppressingContent() {
+        BnbSuppression.warnIfSuppressing(CreateBitsnBobs.LOGGER);
     }
 
     private String enumToCamelCase(final String lowerCase) {

@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "#create_vibrant_vaults:colored_horizontal_item_vaults",
+      "required": false
+    },
+    {
+      "id": "#create_vibrant_vaults:colored_vertical_item_vaults",
+      "required": false
+    },
+    {
+      "id": "#create_vibrant_vaults:vibrant_frogports",
+      "required": false
+    },
+    {
+      "id": "#create_vibrant_vaults:vibrant_redstone_requesters",
+      "required": false
+    }
+  ]
+}

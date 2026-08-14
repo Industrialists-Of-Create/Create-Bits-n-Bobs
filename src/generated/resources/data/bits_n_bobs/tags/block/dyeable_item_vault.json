@@ -1,0 +1,13 @@
+{
+  "values": [
+    "create:item_vault",
+    {
+      "id": "create_connected:item_silo",
+      "required": false
+    },
+    {
+      "id": "create_vibrant_vaults:vertical_item_vault",
+      "required": false
+    }
+  ]
+}

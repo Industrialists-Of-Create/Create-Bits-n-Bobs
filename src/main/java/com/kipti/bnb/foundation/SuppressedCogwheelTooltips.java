@@ -16,10 +16,12 @@ public class SuppressedCogwheelTooltips {
 
     @SubscribeEvent
     public static void onTooltip(final ItemTooltipEvent event) {
-        if (!CogwheelSuppression.isSuppressed(event.getItemStack())) {
-            return;
+        for (final BnbSuppression suppression : BnbSuppression.values()) {
+            if (suppression.isSuppressed(event.getItemStack())) {
+                event.getToolTip().add(Component.translatable(suppression.tooltipTranslationKey()).withStyle(ChatFormatting.RED));
+                return;
+            }
         }
-        event.getToolTip().add(Component.translatable("tooltip.bits_n_bobs.suppressed_cogwheel").withStyle(ChatFormatting.RED));
     }
 
 }

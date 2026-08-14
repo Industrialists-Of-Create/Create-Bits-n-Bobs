@@ -1,6 +1,6 @@
 package com.kipti.bnb.mixin.compat.createcasing;
 
-import com.kipti.bnb.foundation.CogwheelSuppression;
+import com.kipti.bnb.foundation.BnbSuppression;
 import fr.iglee42.createcasing.transmissions.TransmissionSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +36,8 @@ public abstract class ItemChangeBlockManagerMixin {
 
     @Inject(method = "onRightClick", at = @At("HEAD"), cancellable = true)
     private static void bnb$suppressWoodenCogwheelConversion(final PlayerInteractEvent.RightClickBlock event, final CallbackInfo ci) {
-        if (!CogwheelSuppression.isEnabled()) {
+        final BnbSuppression suppression = BnbSuppression.EXTERNAL_WOODEN_COGWHEELS;
+        if (!suppression.isEnabled()) {
             return;
         }
         final TransmissionSet set = ItemChangeBlockManagerMixin.getSetForItem(event.getItemStack().getItem());
@@ -45,12 +46,12 @@ public abstract class ItemChangeBlockManagerMixin {
         }
         final BlockState state = event.getLevel().getBlockState(event.getPos());
         if (ItemChangeBlockManagerMixin.isCogwheel(state) && set.getCogwheel() != null
-                && CogwheelSuppression.isSuppressed(set.getCogwheel().asItem())) {
+                && suppression.isSuppressed(set.getCogwheel().asItem())) {
             ci.cancel();
             return;
         }
         if (ItemChangeBlockManagerMixin.isLargeCogwheel(state) && set.getLargeCogwheel() != null
-                && CogwheelSuppression.isSuppressed(set.getLargeCogwheel().asItem())) {
+                && suppression.isSuppressed(set.getLargeCogwheel().asItem())) {
             ci.cancel();
         }
     }

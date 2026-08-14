@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Shifts fluid tank quad UVs to dyed texture variants when the tank has a dye color applied.
@@ -33,6 +34,15 @@ public class FluidTankModelMixin {
 
     @Unique
     private static final ModelProperty<DyeColor> BNB_TANK_DYE_COLOR = new ModelProperty<>();
+
+    @Unique
+    private static final List<Function<DyeColor, SpriteShiftEntry>> BNB_TANK_SHIFTS = List.of(
+        BnbSpriteShifts.DYED_FLUID_TANK_CONNECTED::get,
+        BnbSpriteShifts.DYED_FLUID_TANK_TOP_CONNECTED::get,
+        BnbSpriteShifts.DYED_FLUID_TANK_INNER_CONNECTED::get,
+        BnbSpriteShifts.DYED_FLUID_TANK_WINDOW::get,
+        BnbSpriteShifts.DYED_FLUID_TANK_WINDOW_SINGLE::get
+    );
 
     @Inject(method = "gatherModelData", at = @At("TAIL"))
     private void bnb$gatherDyeColor(
@@ -78,23 +88,12 @@ public class FluidTankModelMixin {
 
     @Unique
     private static SpriteShiftEntry bnb$findShiftEntry(final BakedQuad quad, final DyeColor color) {
-        SpriteShiftEntry entry;
-
-        entry = BnbSpriteShifts.DYED_FLUID_TANK_CONNECTED.get(color);
-        if (entry != null && QuadTransformer.uvWithinSprite(quad, entry.getOriginal())) return entry;
-
-        entry = BnbSpriteShifts.DYED_FLUID_TANK_TOP_CONNECTED.get(color);
-        if (entry != null && QuadTransformer.uvWithinSprite(quad, entry.getOriginal())) return entry;
-
-        entry = BnbSpriteShifts.DYED_FLUID_TANK_INNER_CONNECTED.get(color);
-        if (entry != null && QuadTransformer.uvWithinSprite(quad, entry.getOriginal())) return entry;
-
-        entry = BnbSpriteShifts.DYED_FLUID_TANK_WINDOW.get(color);
-        if (entry != null && QuadTransformer.uvWithinSprite(quad, entry.getOriginal())) return entry;
-
-        entry = BnbSpriteShifts.DYED_FLUID_TANK_WINDOW_SINGLE.get(color);
-        if (entry != null && QuadTransformer.uvWithinSprite(quad, entry.getOriginal())) return entry;
-
+        for (final Function<DyeColor, SpriteShiftEntry> shift : BNB_TANK_SHIFTS) {
+            final SpriteShiftEntry entry = shift.apply(color);
+            if (entry != null && QuadTransformer.uvWithinSprite(quad, entry.getOriginal())) {
+                return entry;
+            }
+        }
         return null;
     }
 

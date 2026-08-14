@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-10T12:13:52.912110663	Registrate Provider for bits_n_bobs [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.21.1	2026-08-13T18:00:15.895294131	Registrate Provider for bits_n_bobs [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 bae96470ab6d0efb7a73bf4e5f0a82277358b272 assets/bits_n_bobs/blockstates/andesite_encased_flanged_cogwheel.json
 161eacda54e0ee43ba4ec50b5a179c7c27d6ab3a assets/bits_n_bobs/blockstates/andesite_encased_large_flanged_cogwheel.json
 70069cf32ef31f524297f96e15c560aa8e3e41ae assets/bits_n_bobs/blockstates/andesite_encased_piston_extension_pole.json
@@ -1095,6 +1095,7 @@ b577f1ba68b8c54c21bc2241d06f527151352bee data/bits_n_bobs/tags/block/cogwheel_ma
 7f75e8f120ba93ccb3e15c12a7d77e6ac0748fc1 data/bits_n_bobs/tags/block/cogwheel_material_shaftless_large_cogwheel_model.json
 3f6ec09c6a096722cdea20a1e23a094782f1eb04 data/bits_n_bobs/tags/block/dedicated_cogwheel_chain_component.json
 4183bb7476d926ce6b0226efb2cc29df2644d097 data/bits_n_bobs/tags/block/dyeable_fluid_tank.json
+e911894de82db8fd92f9eb41d29699091f6b7e5f data/bits_n_bobs/tags/block/dyeable_item_vault.json
 0ce63931525f5d889fa287bec69d25b7a02e9766 data/bits_n_bobs/tags/block/encased_flanged_cogwheel.json
 ca58e61448cabdec813c8d7542549cfe527e214b data/bits_n_bobs/tags/block/encased_large_flanged_cogwheel.json
 d97a02633c84e4b09ca9b666084ebb8b92f4cfe5 data/bits_n_bobs/tags/block/flanged_cogwheel.json
@@ -1107,6 +1108,7 @@ fb1066af4ed874e0e17d7f32ceddc9654eceff92 data/bits_n_bobs/tags/block/small_flang
 7f3c60eee318d93879ff49da2bed2343a654787b data/bits_n_bobs/tags/block/super_heavy.json
 68f2f6978a33b0088959480ad335ef8c29149eb9 data/bits_n_bobs/tags/item/chairs.json
 aed440e81c0f0f08ed0c4578c60e5f94071d9d2a data/bits_n_bobs/tags/item/suppressible_cogwheels.json
+52a894ddd2bd5e29138eb560d8432b9642a09915 data/bits_n_bobs/tags/item/suppressible_dyed_logistics_components.json
 2cb2802b72d43e1df64d640dfba8ff2cc66bc4f8 data/c/tags/entity_type/teleporting_not_supported.json
 de30238a3ec01e43241a56c5c283d45aae3597b7 data/c/tags/item/ropes.json
 0ebc5af10fcfcff286ab3f6f3a83b07f799248b3 data/create/advancement/recipes/building_blocks/andesite_tile_slab_recycling.json

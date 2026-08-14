@@ -1,0 +1,7 @@
+{
+  "parent": "bits_n_bobs:block/default_cogwheel",
+  "textures": {
+    "1_2": "dndecor:block/dark_metal_cogwheel/yellow",
+    "particle": "dndecor:block/dark_metal_cogwheel/yellow"
+  }
+}

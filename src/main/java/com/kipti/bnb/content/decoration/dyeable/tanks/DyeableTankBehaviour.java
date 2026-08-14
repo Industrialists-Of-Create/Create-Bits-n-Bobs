@@ -1,28 +1,14 @@
 package com.kipti.bnb.content.decoration.dyeable.tanks;
 
 import com.kipti.bnb.content.decoration.dyeable.BaseDyeableBehaviour;
-import com.kipti.bnb.registry.content.BnbAdvancements;
 import com.kipti.bnb.registry.core.BnbFeatureFlag;
-import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BehaviourType;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.DyeItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
-
-import java.util.function.Consumer;
 
 public class DyeableTankBehaviour extends BaseDyeableBehaviour {
 
@@ -51,7 +37,16 @@ public class DyeableTankBehaviour extends BaseDyeableBehaviour {
 
     @Override
     protected void onColorChanged(@Nullable final DyeColor color) {
-        this.refreshConnectedPipes();
+        this.refreshConnectedBlocks();
+    }
+
+    @Override
+    protected void dye(@Nullable final DyeColor color, final boolean single) {
+        if (single) {
+            this.dyeSinglePart(color);
+        } else {
+            this.forEachMultiblockPart(behaviour -> behaviour.setColor(color));
+        }
     }
 
     @Nullable
@@ -64,50 +59,8 @@ public class DyeableTankBehaviour extends BaseDyeableBehaviour {
     }
 
     @Override
-    public void onItemUse(final UseItemOnBlockEvent event) {
-        if (!this.isDyeingEnabled()) return;
-
-        final ItemStack stack = event.getItemStack();
-        if (!(stack.getItem() instanceof final DyeItem dyeItem)) {
-            return;
-        }
-
-        if (!event.getLevel().isClientSide) {
-            BnbAdvancements.DYE_FLUID_COMPONENT.awardTo(event.getPlayer());
-
-            final DyeColor newColor = dyeItem.getDyeColor();
-            if (event.getPlayer() != null && event.getPlayer().isShiftKeyDown()) {
-                this.dyeSingle(newColor);
-            } else {
-                this.dyeEntireTank(newColor);
-            }
-        }
-
-        event.setCanceled(true);
-        event.setCancellationResult(ItemInteractionResult.SUCCESS);
-    }
-
-    @Override
     public boolean isDyeingEnabled() {
         return BnbFeatureFlag.DYEABLE_TANKS.isEnabled();
-    }
-
-    private void dyeSingle(@Nullable final DyeColor color) {
-        final FluidTankBlockEntity tankBE = (FluidTankBlockEntity) this.blockEntity;
-        final FluidTankBlockEntity controllerBE = tankBE.getControllerBE();
-
-        final boolean wasMulti = controllerBE != null && (controllerBE.getWidth() > 1 || controllerBE.getHeight() > 1);
-
-        if (wasMulti) {
-            ConnectivityHandler.splitMulti(controllerBE);
-        }
-
-        this.setColor(color);
-        ConnectivityHandler.formMulti(tankBE);
-
-        if (wasMulti && controllerBE != tankBE) {
-            ConnectivityHandler.formMulti(controllerBE);
-        }
     }
 
     public void setGayDye(@Nullable final GayDye gayDye) {
@@ -116,54 +69,7 @@ public class DyeableTankBehaviour extends BaseDyeableBehaviour {
     }
 
     public void applyGayDyeToEntireTank(final GayDye gayDye) {
-        this.forEachTankPart(behaviour -> behaviour.setGayDye(gayDye));
-    }
-
-    private void dyeEntireTank(@Nullable final DyeColor color) {
-        this.forEachTankPart(behaviour -> behaviour.setColor(color));
-    }
-
-    private void refreshConnectedPipes() {
-        if (!this.hasLevel()) {
-            return;
-        }
-        this.getLevel()
-                .updateNeighborsAt(this.getPos(), this.getBlockState().getBlock());
-    }
-
-    private void forEachTankPart(final Consumer<DyeableTankBehaviour> action) {
-        if (!this.hasLevel()) {
-            return;
-        }
-
-        final FluidTankBlockEntity tankBE = (FluidTankBlockEntity) this.blockEntity;
-        final FluidTankBlockEntity controllerBE = tankBE.getControllerBE();
-        if (controllerBE == null) {
-            action.accept(this);
-            return;
-        }
-
-        final Level level = this.getLevel();
-        final BlockPos controllerPos = controllerBE.getBlockPos();
-        final Direction.Axis axis = this.getAxis();
-        for (int x = 0; x < controllerBE.getWidth(); x++) {
-            for (int y = 0; y < controllerBE.getHeight(); y++) {
-                for (int z = 0; z < controllerBE.getWidth(); z++) {
-                    final BlockPos pos = axis == Direction.Axis.Y ? controllerPos.offset(x, y, z) :
-                            controllerPos.offset(axis == Direction.Axis.X ? y : x, z, axis == Direction.Axis.Z ? y : x);
-                    final DyeableTankBehaviour behaviour = BlockEntityBehaviour.get(level, pos, TYPE);
-                    if (behaviour != null) {
-                        action.accept(behaviour);
-                    }
-                }
-            }
-        }
-    }
-
-    private Direction.@NonNull Axis getAxis() {
-        return !this.getBlockState().hasProperty(BlockStateProperties.HORIZONTAL_AXIS) ?
-                Direction.Axis.Y :
-                this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS);
+        this.forEachMultiblockPart(behaviour -> ((DyeableTankBehaviour) behaviour).setGayDye(gayDye));
     }
 
     @Override
@@ -190,7 +96,7 @@ public class DyeableTankBehaviour extends BaseDyeableBehaviour {
         } else {
             this.gayDye = null;
         }
-        return previousGayDye != this.gayDye;
+        return previousGayDye == null ? this.gayDye != null : !previousGayDye.visuallyEquals(this.gayDye);
     }
 
 }

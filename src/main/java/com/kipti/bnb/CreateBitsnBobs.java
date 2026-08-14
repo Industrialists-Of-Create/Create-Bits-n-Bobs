@@ -54,8 +54,11 @@ public class CreateBitsnBobs {
             );
 
     public CreateBitsnBobs(final IEventBus modEventBus, final ModContainer modContainer) {
-        warnAboutCogwheelAssetReplacement("dndecor", "Design n' Decor");
-        warnAboutCogwheelAssetReplacement("createcasing", "Create Encased");
+        LOGGER.info("Bits 'n' Bobs is present!");
+        LOGGER.info("Sorry for the disruption if any, I do poke around with the graphics of other mods");
+
+        warnAboutCogwheelAssetReplacement("dndecor", "Create: Design n' Decor");
+        warnAboutCogwheelAssetReplacement("createcasing", "Create: Encased");
 
         modEventBus.addListener(CreateBitsnBobsData::gatherData);
         final ModLoadingContext modLoadingContext = ModLoadingContext.get();

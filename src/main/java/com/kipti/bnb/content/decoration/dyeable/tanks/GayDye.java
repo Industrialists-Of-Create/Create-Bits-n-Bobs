@@ -3,6 +3,8 @@ package com.kipti.bnb.content.decoration.dyeable.tanks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeColor;
 
+import javax.annotation.Nullable;
+
 /**
  * be whooo you arreeee for yourrr priddeeee
  */
@@ -95,6 +97,12 @@ public class GayDye {
 
     public boolean needsTicking() {
         return this.animationType == AnimationType.SCROLLING;
+    }
+
+    public boolean visuallyEquals(@Nullable final GayDye other) {
+        return other != null
+                && this.animationType == other.animationType
+                && this.prideType == other.prideType;
     }
 
     public enum AnimationType {

@@ -311,3 +311,12 @@
 - Added proper incompatibility warning for incompatible TMFG version
 - Fixed mixin issue when loading without an optional compat
 - Potentially fixed cogwheel material and fluid dying mechanics not working
+
+# 1.21.1-2.2.3
+
+- Internal refactors to dye system
+- Fixed item models of DnDecor not also being corrected
+
+# 1.21.1-2.2.4
+
+- Further internal refactors and improvements to dye system

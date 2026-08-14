@@ -23,7 +23,8 @@ public class BnbTags {
     public enum BnbItemTags {
 
         CHAIRS,
-        SUPPRESSIBLE_COGWHEELS;
+        SUPPRESSIBLE_COGWHEELS,
+        SUPPRESSIBLE_DYED_LOGISTICS_COMPONENTS;
 
         public final TagKey<Item> tag;
 
@@ -81,7 +82,8 @@ public class BnbTags {
         COGWHEEL_MATERIAL_ENCASED_LARGE_FLANGED_COGWHEEL_MODEL,
 
         //For checking blocks that may be dyeable in both BnB OR BnD
-        DYEABLE_FLUID_TANK;
+        DYEABLE_FLUID_TANK,
+        DYEABLE_ITEM_VAULT;
 
         public final TagKey<Block> tag;
 
@@ -133,6 +135,11 @@ public class BnbTags {
             prov.addTag(BnbBlockTags.DYEABLE_FLUID_TANK.tag)
                     .add(AllBlocks.FLUID_TANK.getKey())
                     .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "fluid_vessel"));
+
+            prov.addTag(BnbBlockTags.DYEABLE_ITEM_VAULT.tag)
+                    .add(AllBlocks.ITEM_VAULT.getKey())
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "item_silo"))
+                    .addOptional(ResourceLocation.fromNamespaceAndPath("create_vibrant_vaults", "vertical_item_vault"));
 
             prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_CANDIDATES.tag)
                     .addTag(BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.tag)
@@ -236,6 +243,12 @@ public class BnbTags {
                 cogwheelTag.addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", wood + "_cogwheel"));
                 cogwheelTag.addOptional(ResourceLocation.fromNamespaceAndPath("createcasing", wood + "_large_cogwheel"));
             }
+
+            final TagAppender<Item> dyedLogisticsTag = prov.addTag(BnbItemTags.SUPPRESSIBLE_DYED_LOGISTICS_COMPONENTS.tag);
+            dyedLogisticsTag.addOptionalTag(ResourceLocation.fromNamespaceAndPath("create_vibrant_vaults", "colored_horizontal_item_vaults"));
+            dyedLogisticsTag.addOptionalTag(ResourceLocation.fromNamespaceAndPath("create_vibrant_vaults", "colored_vertical_item_vaults"));
+            dyedLogisticsTag.addOptionalTag(ResourceLocation.fromNamespaceAndPath("create_vibrant_vaults", "vibrant_frogports"));
+            dyedLogisticsTag.addOptionalTag(ResourceLocation.fromNamespaceAndPath("create_vibrant_vaults", "vibrant_redstone_requesters"));
         });
     }
 
