@@ -320,3 +320,7 @@
 # 1.21.1-2.2.4
 
 - Further internal refactors and improvements to dye system
+
+# 1.21.1-2.2.5
+
+- Reduced neoforge version requirement

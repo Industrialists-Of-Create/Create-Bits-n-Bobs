@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * Fix manual item application not accounting for block entities (the rope pulley) by attaching a rope pulley.
+ * Fix manual item application jei recipe display not accounting for block entities (the rope pulley) by attaching a rope pulley.
  */
 @Mixin(GuiGameElement.class)
 public class GuiGameElementMixin {
