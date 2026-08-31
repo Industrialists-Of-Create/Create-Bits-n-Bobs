@@ -324,3 +324,11 @@
 # 1.21.1-2.2.5
 
 - Reduced neoforge version requirement
+
+# 1.21.1-2.2.6
+
+- Fix cogwheel rendering with flywheel off
+
+# 1.21.1-2.2.7
+
+- Redo flanged cogwheel encased rendering

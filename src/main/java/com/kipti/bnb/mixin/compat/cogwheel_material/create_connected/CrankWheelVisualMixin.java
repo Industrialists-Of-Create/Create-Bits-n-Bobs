@@ -38,7 +38,7 @@ public abstract class CrankWheelVisualMixin extends AbstractBlockEntityVisual<Ki
     public Instancer<RotatingInstance> bnb$materialBase(final InstancerProvider provider, final InstanceType<RotatingInstance> type, final Model model, final Operation<Instancer<RotatingInstance>> original) {
         if (this.bnb$materialState == null)
             this.bnb$materialState = new State();
-        return this.bnb$materialInstancer(provider, type, model, original, Direction.UP, this.blockState.getValue(BlockStateProperties.FACING), this.bnb$materialState, this.blockEntity, this.blockState);
+        return this.bnb$materialInstancer(provider, type, model, Direction.UP, this.blockState.getValue(BlockStateProperties.FACING), this.bnb$materialState, this.blockEntity, this.blockState);
     }
 
     @Inject(method = "update", at = @At("HEAD"))

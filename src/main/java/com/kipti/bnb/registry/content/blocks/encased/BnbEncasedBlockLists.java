@@ -1,6 +1,6 @@
 package com.kipti.bnb.registry.content.blocks.encased;
 
-import com.kipti.bnb.content.kinetics.encased_blocks.cogwheel_chain.BnbEncasedEmptyFlangedGearBlock;
+import com.kipti.bnb.content.kinetics.encased_blocks.cogwheel.BnbEncasedFlangedCogBlock;
 import com.kipti.bnb.content.kinetics.encased_blocks.piston_pole.EncasedPistonExtensionPoleBlock;
 import com.kipti.bnb.foundation.BnbBuilderTransformers;
 import com.kipti.bnb.foundation.EncasedBlockList;
@@ -66,22 +66,22 @@ public class BnbEncasedBlockLists {
                     .loot((p, lb) -> p.add(
                             lb, LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                                                      .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(
-                                                                      lb)
-                                                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(
-                                                                            EncasedPistonExtensionPoleBlock.EMPTY,
-                                                                            false
-                                                                    )))
-                                                      .add(LootItem.lootTableItem(AllBlocks.PISTON_EXTENSION_POLE.get().asItem())))
+                                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(
+                                                            lb)
+                                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(
+                                                            EncasedPistonExtensionPoleBlock.EMPTY,
+                                                            false
+                                                    )))
+                                            .add(LootItem.lootTableItem(AllBlocks.PISTON_EXTENSION_POLE.get().asItem())))
                     ))
                     .simpleItem()
                     .register());
 
-    public static final EncasedBlockList<BnbEncasedEmptyFlangedGearBlock> ENCASED_FLANGED_COGWHEEL = new EncasedBlockList<>(
+    public static final EncasedBlockList<BnbEncasedFlangedCogBlock> ENCASED_FLANGED_COGWHEEL = new EncasedBlockList<>(
             casing ->
                     REGISTRATE.block(
                                     casing.asId("encased_flanged_cogwheel"),
-                                    p -> new BnbEncasedEmptyFlangedGearBlock(p, false, casing.getMaterial(),
+                                    p -> new BnbEncasedFlangedCogBlock(p, false, casing.getMaterial(),
                                             BnbKineticBlocks.SMALL_FLANGED_COGWHEEL::get)
                             )
                             .properties(p -> p.mapColor(MapColor.PODZOL))
@@ -95,11 +95,12 @@ public class BnbEncasedBlockLists {
                             .tag(BnbTags.BnbBlockTags.COGWHEEL_CHAIN_NO_SMALL_OFFSET.tag)
                             .tag(BnbTags.BnbBlockTags.ENCASED_FLANGED_COGWHEEL.tag)
                             .register());
-    public static final EncasedBlockList<BnbEncasedEmptyFlangedGearBlock> ENCASED_LARGE_FLANGED_COGWHEEL = new EncasedBlockList<>(
+
+    public static final EncasedBlockList<BnbEncasedFlangedCogBlock> ENCASED_LARGE_FLANGED_COGWHEEL = new EncasedBlockList<>(
             casing ->
                     REGISTRATE.block(
                                     casing.asId("encased_large_flanged_cogwheel"),
-                                    p -> new BnbEncasedEmptyFlangedGearBlock(p, true, casing.getMaterial(),
+                                    p -> new BnbEncasedFlangedCogBlock(p, true, casing.getMaterial(),
                                             BnbKineticBlocks.LARGE_FLANGED_COGWHEEL::get)
                             )
                             .properties(p -> p.mapColor(MapColor.PODZOL))

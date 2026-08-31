@@ -41,7 +41,6 @@ public abstract class CreativeCogwheelVisualMixin extends AbstractBlockEntityVis
         return this.bnb$materialInstancer(provider,
                 type,
                 model,
-                original,
                 Direction.UP,
                 Direction.fromAxisAndDirection(this.blockState.getValue(BlockStateProperties.AXIS), Direction.AxisDirection.POSITIVE),
                 this.bnb$materialState,

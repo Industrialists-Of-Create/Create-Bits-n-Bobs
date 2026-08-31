@@ -38,7 +38,7 @@ public abstract class CogwheelMaterialVisualMixin extends AbstractBlockEntityVis
     public Instancer<RotatingInstance> bnb$materialCog(final InstancerProvider provider, final InstanceType<RotatingInstance> type, final Model model, final Operation<Instancer<RotatingInstance>> original) {
         if (this.bnb$materialState == null)
             this.bnb$materialState = new State();
-        return this.bnb$materialInstancer(provider, type, model, original, null, null, this.bnb$materialState, this.blockEntity, this.blockState);
+        return this.bnb$materialInstancer(provider, type, model, null, null, this.bnb$materialState, this.blockEntity, this.blockState);
     }
 
     @Inject(method = "update", at = @At("HEAD"))

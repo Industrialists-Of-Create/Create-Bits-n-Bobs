@@ -37,6 +37,7 @@ public abstract class BaseDyeableBehaviour extends SuperBlockEntityBehaviour {
         if (!this.isDyeingEnabled()) return;
 
         final ItemStack stack = event.getItemStack();
+
         if (!(stack.getItem() instanceof final DyeItem dyeItem)) {
             return;
         }

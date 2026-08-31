@@ -6,6 +6,7 @@ import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperBufferFactory;
 import net.createmod.catnip.render.SuperByteBuffer;
 import net.createmod.catnip.render.SuperByteBufferCache;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Blocks;
@@ -59,7 +60,7 @@ public class CogwheelMaterialContext {
         if (variant == null)
             return fallback.get();
 
-        return buffer(variant, material, Direction.UP, TransformKind.NONE);
+        return bufferBlock(state, material, Direction.UP, TransformKind.NONE);
     }
 
     private static SuperByteBuffer buffer(
@@ -83,13 +84,42 @@ public class CogwheelMaterialContext {
                 }
         );
     }
+    private static SuperByteBuffer bufferBlock(
+            final BlockState state,
+            final BlockState material,
+            final Direction facing,
+            final TransformKind transform
+    ) {
+        return SuperByteBufferCache.getInstance().get(
+                COGWHEEL_MATERIAL,
+                new ModelKey(state, material, facing, transform),
+                () -> {
+                    final BakedModel model = CogwheelMaterialRenderer.generateModel(Minecraft.getInstance().getBlockRenderer().getBlockModel(state), material);
+                    final PoseStack poseStack = switch (transform) {
+                        case NONE -> new PoseStack();
+                        case FACE -> CachedBuffers.rotateToFace(facing).get();
+                        case FACE_VERTICAL -> CachedBuffers.rotateToFaceVertical(facing).get();
+                    };
+                    return SuperBufferFactory.getInstance()
+                            .createForBlock(model, state, poseStack);
+                }
+        );
+    }
 
     public record ModelKey(
             CogwheelMaterialRenderer.Variant variant,
+            BlockState state,
             BlockState material,
             Direction facing,
             TransformKind transform
     ) {
+        public ModelKey(final CogwheelMaterialRenderer.Variant variant, final BlockState material, final Direction facing, final TransformKind transform) {
+            this(variant, null, material, facing, transform);
+        }
+
+        public ModelKey(final BlockState state, final BlockState material, final Direction facing, final TransformKind transform) {
+            this(null, state, material, facing, transform);
+        }
     }
 
     public enum TransformKind {

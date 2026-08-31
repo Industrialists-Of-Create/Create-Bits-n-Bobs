@@ -1,7 +1,6 @@
 package com.kipti.bnb.content.decoration.cogwheel_material;
 
 import com.cake.azimuth.behaviour.SuperBlockEntityBehaviour;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
@@ -49,7 +48,6 @@ public interface CogwheelMaterialVisualSupport {
             final InstancerProvider provider,
             final InstanceType<RotatingInstance> type,
             final Model model,
-            final Operation<Instancer<RotatingInstance>> original,
             @Nullable final Direction face,
             @Nullable final Direction orientation,
             final State state,
@@ -61,20 +59,18 @@ public interface CogwheelMaterialVisualSupport {
 
         final CogwheelMaterialBehaviour behaviour = SuperBlockEntityBehaviour.get(blockEntity, CogwheelMaterialBehaviour.TYPE);
         if (behaviour == null || behaviour.material == null)
-            return original.call(provider, type, model);
+            return provider.instancer(type, model);
 
         final BlockState material = behaviour.material;
         state.lastMaterial = material;
 
         final CogwheelMaterialRenderer.Variant variant = CogwheelMaterialRenderer.getVariant(blockState);
         if (variant == null)
-            return original.call(provider, type, model);
+            return provider.instancer(type, model);
 
-        return original.call(
-                provider, type, CogwheelMaterialVisual.MODEL_CACHE.get(
-                        new CogwheelMaterialVisual.ModelKey(variant, material)
-                )
-        );
+        return provider.instancer(type, CogwheelMaterialVisual.MODEL_CACHE.get(
+                new CogwheelMaterialVisual.ModelKey(variant, material)
+        ));
     }
 
     /**

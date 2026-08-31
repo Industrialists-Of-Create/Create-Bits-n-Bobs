@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = { SingleAxisRotatingVisual.class, EncasedCogVisual.class})
+@Mixin(value = {SingleAxisRotatingVisual.class, EncasedCogVisual.class})
 public abstract class CogwheelMaterialVisualMixin extends AbstractBlockEntityVisual<KineticBlockEntity> implements CogwheelMaterialVisualSupport {
 
     @Mutable
@@ -42,14 +42,14 @@ public abstract class CogwheelMaterialVisualMixin extends AbstractBlockEntityVis
     public Instancer<RotatingInstance> bnb$materialCog(final InstancerProvider provider, final InstanceType<RotatingInstance> type, final Model model, final Operation<Instancer<RotatingInstance>> original) {
         if (this.bnb$materialState == null)
             this.bnb$materialState = new State();
-        return this.bnb$materialInstancer(provider, type, model, original, null, null, this.bnb$materialState, this.blockEntity, this.blockState);
+        return this.bnb$materialInstancer(provider, type, model, null, null, this.bnb$materialState, this.blockEntity, this.blockState);
     }
 
     @WrapOperation(method = "<init>(Ldev/engine_room/flywheel/api/visualization/VisualizationContext;Lcom/simibubi/create/content/kinetics/base/KineticBlockEntity;FLnet/minecraft/core/Direction;Ldev/engine_room/flywheel/api/model/Model;)V", require = 0, at = @At(value = "INVOKE", target = "Ldev/engine_room/flywheel/api/instance/InstancerProvider;instancer(Ldev/engine_room/flywheel/api/instance/InstanceType;Ldev/engine_room/flywheel/api/model/Model;)Ldev/engine_room/flywheel/api/instance/Instancer;"))
     public Instancer<RotatingInstance> bnb$materialSingleAxis(final InstancerProvider provider, final InstanceType<RotatingInstance> type, final Model model, final Operation<Instancer<RotatingInstance>> original, @Local(argsOnly = true) final Direction from) {
         if (this.bnb$materialState == null)
             this.bnb$materialState = new State();
-        return this.bnb$materialInstancer(provider, type, model, original, from, null, this.bnb$materialState, this.blockEntity, this.blockState);
+        return this.bnb$materialInstancer(provider, type, model, from, null, this.bnb$materialState, this.blockEntity, this.blockState);
     }
 
     @Inject(method = "update", at = @At("HEAD"))

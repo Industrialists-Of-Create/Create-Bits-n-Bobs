@@ -1,6 +1,6 @@
 package com.kipti.bnb.content.decoration.truss;
 
-import com.kipti.bnb.content.kinetics.encased_blocks.BnbEncasedShaftBlock;
+import com.kipti.bnb.content.kinetics.encased_blocks.cogwheel.BnbEncasedShaftBlock;
 import com.kipti.bnb.registry.client.BnbShapes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;

@@ -1,7 +1,7 @@
 package com.kipti.bnb.registry.content.blocks.encased;
 
-import com.kipti.bnb.content.kinetics.encased_blocks.BnbEncasedCogwheelBlock;
-import com.kipti.bnb.content.kinetics.encased_blocks.BnbEncasedShaftBlock;
+import com.kipti.bnb.content.kinetics.encased_blocks.cogwheel.BnbEncasedCogwheelBlock;
+import com.kipti.bnb.content.kinetics.encased_blocks.cogwheel.BnbEncasedShaftBlock;
 import com.kipti.bnb.foundation.BnbBuilderTransformers;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.encasing.EncasingRegistry;

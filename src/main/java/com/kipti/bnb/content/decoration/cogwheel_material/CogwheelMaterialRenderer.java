@@ -6,14 +6,20 @@ import com.kipti.bnb.registry.core.BnbTags;
 import com.pedrorok.hypertube.registry.ModPartialModels;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.foundation.model.BakedModelHelper;
+import com.simibubi.create.foundation.model.BakedQuadHelper;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
+import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.registry.RegisteredObjectsHelper;
 import net.createmod.catnip.render.StitchedSprite;
+import net.createmod.ponder.render.VirtualRenderHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.SimpleBakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -28,10 +34,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+
+import static net.createmod.catnip.render.SpriteShiftEntry.getUnInterpolatedU;
+import static net.createmod.catnip.render.SpriteShiftEntry.getUnInterpolatedV;
 
 public class CogwheelMaterialRenderer {
 
@@ -49,7 +57,7 @@ public class CogwheelMaterialRenderer {
         final String wood = plankStateToWoodName(planksBlockState);
 
         if (wood == null)
-            return BakedModelHelper.generateModel(template, sprite -> null);
+            return generateModel(template, sprite -> null);
 
         final String namespace = id.getNamespace();
         final BlockState strippedLogBlockState = getStrippedLogBlockState(namespace, wood);
@@ -59,7 +67,54 @@ public class CogwheelMaterialRenderer {
         map.put(STRIPPED_SPRUCE_LOG_TEMPLATE.get(), getSpriteOnSide(strippedLogBlockState, Direction.SOUTH));
         map.put(STRIPPED_SPRUCE_LOG_TOP_TEMPLATE.get(), getSpriteOnSide(strippedLogBlockState, Direction.UP));
 
-        return BakedModelHelper.generateModel(template, map::get);
+        return generateModel(template, map::get);
+    }
+
+    public static BakedModel generateModel(BakedModel template, UnaryOperator<TextureAtlasSprite> spriteSwapper) {
+        RandomSource random = RandomSource.create();
+
+        Map<Direction, List<BakedQuad>> culledFaces = new EnumMap<>(Direction.class);
+        for (Direction cullFace : Iterate.directions) {
+            random.setSeed(42L);
+            List<BakedQuad> quads = template.getQuads(null, cullFace, random, VirtualRenderHelper.VIRTUAL_DATA, RenderType.solid());
+            culledFaces.put(cullFace, swapSprites(quads, spriteSwapper));
+        }
+
+        random.setSeed(42L);
+        List<BakedQuad> quads = template.getQuads(null, null, random, VirtualRenderHelper.VIRTUAL_DATA, RenderType.solid());
+        List<BakedQuad> unculledFaces = swapSprites(quads, spriteSwapper);
+
+        TextureAtlasSprite particleSprite = template.getParticleIcon(VirtualRenderHelper.VIRTUAL_DATA);
+        TextureAtlasSprite swappedParticleSprite = spriteSwapper.apply(particleSprite);
+        if (swappedParticleSprite != null) {
+            particleSprite = swappedParticleSprite;
+        }
+        return new SimpleBakedModel(unculledFaces, culledFaces, template.useAmbientOcclusion(), template.usesBlockLight(), template.isGui3d(), particleSprite, template.getTransforms(), ItemOverrides.EMPTY);
+    }
+
+    public static List<BakedQuad> swapSprites(List<BakedQuad> quads, UnaryOperator<TextureAtlasSprite> spriteSwapper) {
+        List<BakedQuad> newQuads = new ArrayList<>(quads);
+        int size = quads.size();
+        for (int i = 0; i < size; i++) {
+            BakedQuad quad = quads.get(i);
+            TextureAtlasSprite sprite = quad.getSprite();
+            TextureAtlasSprite newSprite = spriteSwapper.apply(sprite);
+            if (newSprite == null || sprite == newSprite)
+                continue;
+
+            BakedQuad newQuad = BakedQuadHelper.clone(quad);
+            int[] vertexData = newQuad.getVertices();
+
+            for (int vertex = 0; vertex < 4; vertex++) {
+                float u = BakedQuadHelper.getU(vertexData, vertex);
+                float v = BakedQuadHelper.getV(vertexData, vertex);
+                BakedQuadHelper.setU(vertexData, vertex, newSprite.getU(getUnInterpolatedU(sprite, u)));
+                BakedQuadHelper.setV(vertexData, vertex, newSprite.getV(getUnInterpolatedV(sprite, v)));
+            }
+
+            newQuads.set(i, newQuad);
+        }
+        return newQuads;
     }
 
     private static TextureAtlasSprite getSpriteOnSide(final BlockState state, final Direction side) {

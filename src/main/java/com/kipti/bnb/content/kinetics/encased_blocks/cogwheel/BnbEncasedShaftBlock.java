@@ -1,4 +1,4 @@
-package com.kipti.bnb.content.kinetics.encased_blocks;
+package com.kipti.bnb.content.kinetics.encased_blocks.cogwheel;
 
 import com.kipti.bnb.registry.content.BnbBlockEntities;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
