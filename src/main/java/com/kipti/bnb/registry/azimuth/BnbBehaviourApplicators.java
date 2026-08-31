@@ -12,6 +12,7 @@ import com.kipti.bnb.content.kinetics.cogwheel_chain.behaviour.CogwheelChainBeha
 import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.CogwheelChainCandidate;
 import com.kipti.bnb.registry.core.BnbTags;
 import com.simibubi.create.AllBlockEntityTypes;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -29,7 +30,7 @@ public class BnbBehaviourApplicators {
 
     public static void register() {
         BehaviourApplicators.register(be -> {
-            if (CogwheelChainCandidate.isValidCandidate(be.getBlockState())) {
+            if (be instanceof KineticBlockEntity && CogwheelChainCandidate.isValidCandidate(be.getBlockState())) {
                 return List.of(new CogwheelChainBehaviour(be));
             }
             return null;

@@ -64,6 +64,7 @@ public class BnbTags {
 
         EXTRA_COGWHEEL_CHAIN_CANDIDATES,
         DEDICATED_COGWHEEL_CHAIN_COMPONENT,
+        FORBIDDEN_COGWHEEL_CHAIN_COMPONENT,
 
         FLANGED_COGWHEEL,
         LARGE_FLANGED_COGWHEEL,
@@ -153,7 +154,7 @@ public class BnbTags {
                     .addOptional(ResourceLocation.fromNamespaceAndPath("create_connected", "large_crank_wheel"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_entrance"))
                     .addOptional(ResourceLocation.fromNamespaceAndPath("create_hypertube", "hypertube_accelerator"));
-
+            
             prov.addTag(BnbBlockTags.COGWHEEL_MATERIAL_COGWHEEL_MODEL.tag)
                     .add(AllBlocks.COGWHEEL.getKey());
 
@@ -230,7 +231,7 @@ public class BnbTags {
             prov.addTag(BnbBlockTags.LARGE_FLANGED_COGWHEEL.tag)
                     .addTag(BnbBlockTags.ENCASED_LARGE_FLANGED_COGWHEEL.tag)
                     .add(BnbKineticBlocks.LARGE_FLANGED_COGWHEEL.getKey());
-            
+
             prov.addTag(BnbBlockTags.FLANGED_COGWHEEL.tag)
                     .addTag(BnbBlockTags.SMALL_FLANGED_COGWHEEL.tag)
                     .addTag(BnbBlockTags.LARGE_FLANGED_COGWHEEL.tag);

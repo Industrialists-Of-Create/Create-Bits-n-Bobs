@@ -332,3 +332,9 @@
 # 1.21.1-2.2.7
 
 - Redo flanged cogwheel encased rendering
+
+# 1.21.1-2.2.8
+
+- Changed flanged cogwheel model from 12 sides to 8 sides
+- Fixed incompatibility with Create: Petrol's Parts differential
+- Further pulled back neo requirement, im hoping there was a reason it wasnt fully back
