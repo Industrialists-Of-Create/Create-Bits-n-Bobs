@@ -342,3 +342,8 @@
 # 1.21.1-2.2.9
 
 - Fix encasing chain cogwheels deleting the chain due to a missing `!`
+
+# 1.21.1-2.2.10
+
+- Fixed chain cogwheels not properly propagating kinetics in a specific case
+- Added missing null guard when transferring chain controller dealing with a controller in a broken state.

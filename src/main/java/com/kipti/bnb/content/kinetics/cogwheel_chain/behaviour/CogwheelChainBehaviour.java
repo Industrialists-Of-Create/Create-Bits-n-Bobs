@@ -154,15 +154,17 @@ public class CogwheelChainBehaviour extends SuperBlockEntityBehaviour implements
     private boolean tryTransferOnRemoval() {
         final CogwheelChainBehaviour controllerBehaviour = this.resolveControllerBehaviour();
         if (controllerBehaviour == null) return false;
+        final CogwheelChain chain = controllerBehaviour.getControlledChain();
+        if (chain == null) return false;
 
         final BlockState replacingState = this.getLevel().getBlockState(this.getPos());
-        final PathedCogwheelNode thisNode = controllerBehaviour.getControlledChain().getNodeFromControllerOffset(
+        final PathedCogwheelNode thisNode = chain.getNodeFromControllerOffset(
                 this.controllerOffset == null ? Vec3i.ZERO : this.controllerOffset
         );
         final CogwheelChainCandidate replacingCandidate = CogwheelChainCandidate.getForBlock(replacingState);
         if (replacingCandidate == null || thisNode == null ||
                 !replacingCandidate.isConsistentWithNode(thisNode) ||
-                !controllerBehaviour.getControlledChain().getChainType().getCogwheelPredicate().test(replacingState.getBlock()))
+                !chain.getChainType().getCogwheelPredicate().test(replacingState.getBlock()))
             return false;
 
         final BlockEntity replacingBlockEntity = this.getLevel().getBlockEntity(this.getPos());

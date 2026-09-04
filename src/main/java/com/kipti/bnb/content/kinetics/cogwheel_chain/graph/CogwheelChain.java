@@ -22,7 +22,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -185,9 +184,10 @@ public class CogwheelChain {
             isController = false;
         }
 
-        final BlockEntity be = level.getBlockEntity(controllerPos);
-        if (be instanceof final KineticBlockEntity kbe) {
-            kbe.updateSpeed = true;
+        for (final PlacingCogwheelNode node : source.getVisitedNodes()) {
+            if (level.getBlockEntity(node.pos()) instanceof final KineticBlockEntity kbe) {
+                kbe.updateSpeed = true;
+            }
         }
     }
 

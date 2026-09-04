@@ -1,11 +1,8 @@
-import org.gradle.util.VersionNumber
-
 plugins {
     id 'java-library'
-    id 'maven-publish'
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.140'
-    id 'me.modmuss50.mod-publish-plugin' version '2.1.1'
+    id 'net.azmod.release' version '0.1.0'
 }
 
 def isSnapshotVersioning = project.hasProperty('snapshot_versioning') && project.property('snapshot_versioning').toString().toBoolean()
@@ -29,16 +26,6 @@ repositories {
     maven {
         name = 'azmod-maven'
         url = "https://maven.azmod.net/releases"
-    }
-    repositories {
-        maven {
-            name "azmod-maven"
-            url "https://maven.azmod.net/${findProperty('azmodRepository') ?: 'releases'}"
-            credentials {
-                username = findProperty('azmodMavenUser') ?: System.getenv('AZMOD_MAVEN_USER')
-                password = findProperty('azmodMavenToken') ?: System.getenv('AZMOD_MAVEN_PASSWORD')
-            }
-        }
     }
 
     maven {
@@ -89,27 +76,6 @@ repositories {
         }
     }
 }
-// Example configuration to allow publishing using the maven-publish plugin
-publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
-
-            artifactId = mod_id
-        }
-    }
-    repositories {
-        maven {
-            name "azmod-maven"
-            url "https://maven.azmod.net/${findProperty('azmodRepository') ?: 'releases'}"
-            credentials {
-                username = findProperty('azmodMavenUser') ?: System.getenv('AZMOD_MAVEN_USER')
-                password = findProperty('azmodMavenToken') ?: System.getenv('AZMOD_MAVEN_PASSWORD')
-            }
-        }
-    }
-}
-
 neoForge {
     version = neo_version
 
@@ -228,54 +194,9 @@ jar {
         attributes('FMLModType': 'GAMELIBRARY')
     }
 }
-// ========================
-// Changelog & Publishing
-// ========================
-
-String getRelevantChangelog(String targetVersion) {
-    def changelogFile = file("changelog.md")
-    if (!changelogFile.exists()) {
-        return "No changelog found."
-    }
-    def lines = changelogFile.readLines()
-    def result = new StringBuilder()
-    def capturing = false
-    def targetMinecraftVersion = targetVersion.split("-")[0]
-    def targetModVersion = targetVersion.split("-").length > 1 ? targetVersion.split("-")[1] : ""
-    def newerVersionsExist = false
-
-    for (line in lines) {
-        if (line.startsWith("# ")) {
-            if (capturing) {
-                break
-            }
-            def versionTag = line.substring(2).trim()
-            def entryMinecraftVersion = versionTag.split("-")[0]
-            def entryModVersion = versionTag.split("-").length > 1 ? versionTag.split("-")[1] : ""
-            if (versionTag == targetVersion) {
-                capturing = true
-                continue
-            }
-            if (entryMinecraftVersion == targetMinecraftVersion &&
-                    VersionNumber.parse(entryModVersion) > VersionNumber.parse(targetModVersion)) {
-                newerVersionsExist = true
-            }
-        } else if (capturing && line.trim()) {
-            result.append(line).append("\n")
-        }
-    }
-
-    if (newerVersionsExist) {
-        println("WARNING: Publishing an older version! Newer entries exist for Minecraft ${targetMinecraftVersion}.")
-    }
-
-    return result.length() > 0 ? result.toString().trim() : "No changelog entry found for version ${targetVersion}."
-}
 
 publishMods {
     file = jar.archiveFile
-    def changelogText = getRelevantChangelog(minecraft_version + "-" + mod_version)
-    changelog = changelogText
     type = STABLE
     modLoaders.add("neoforge")
     displayName = "${mod_name} ${mod_version} NeoForge ${minecraft_version}"
@@ -305,10 +226,6 @@ publishMods {
         webhookUrl = findProperty('aztechDiscordPublishWebhook')
         username = "bits n bober version bot"
         avatarUrl = "https://cataas.com/cat?width=500&height=500"
-        content = """
-        # New Mod Release: ${getDisplayName().get()}
-        ${changelogText}
-        """.trim()
         style { look = "CLASSIC" }
     }
 }
