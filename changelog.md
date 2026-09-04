@@ -338,3 +338,7 @@
 - Changed flanged cogwheel model from 12 sides to 8 sides
 - Fixed incompatibility with Create: Petrol's Parts differential
 - Further pulled back neo requirement, im hoping there was a reason it wasnt fully back
+
+# 1.21.1-2.2.9
+
+- Fix encasing chain cogwheels deleting the chain due to a missing `!`

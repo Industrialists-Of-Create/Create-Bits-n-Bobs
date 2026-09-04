@@ -135,7 +135,7 @@ public class CogwheelChainBehaviour extends SuperBlockEntityBehaviour implements
     @Override
     public void remove() {
         super.remove();
-        if (this.isClientSide()) return;
+        if (this.isClientSide() || !this.isPartOfChain()) return;
 
         if (this.tryTransferOnRemoval()) return;
 
@@ -150,9 +150,6 @@ public class CogwheelChainBehaviour extends SuperBlockEntityBehaviour implements
 
     /**
      * See if we are being replaced by a compatible block entity and try transfer our info, ensuring we check integrity next tick
-     *
-     * @return
-     *
      */
     private boolean tryTransferOnRemoval() {
         final CogwheelChainBehaviour controllerBehaviour = this.resolveControllerBehaviour();
@@ -165,7 +162,7 @@ public class CogwheelChainBehaviour extends SuperBlockEntityBehaviour implements
         final CogwheelChainCandidate replacingCandidate = CogwheelChainCandidate.getForBlock(replacingState);
         if (replacingCandidate == null || thisNode == null ||
                 !replacingCandidate.isConsistentWithNode(thisNode) ||
-                controllerBehaviour.getControlledChain().getChainType().getCogwheelPredicate().test(replacingState.getBlock()))
+                !controllerBehaviour.getControlledChain().getChainType().getCogwheelPredicate().test(replacingState.getBlock()))
             return false;
 
         final BlockEntity replacingBlockEntity = this.getLevel().getBlockEntity(this.getPos());
