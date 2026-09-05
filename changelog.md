@@ -343,7 +343,10 @@
 
 - Fix encasing chain cogwheels deleting the chain due to a missing `!`
 
-# 1.21.1-2.2.10
+# 1.21.1-2.3.0
 
+- Cogwheel chain model no longer twists!
 - Fixed chain cogwheels not properly propagating kinetics in a specific case
 - Added missing null guard when transferring chain controller dealing with a controller in a broken state.
+- Fixed #164 where certain creative tabs would cause crashes with item suppression
+- Block vertical chain carriages instead of crashing

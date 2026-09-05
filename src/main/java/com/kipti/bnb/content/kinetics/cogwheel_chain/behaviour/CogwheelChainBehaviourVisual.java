@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix3f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
@@ -54,73 +55,73 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
         this.kineticBlockEntity = kineticBlockEntity;
         this.cogwheelChainBehaviour = cogwheelChainBehaviour;
 
-        rebuildMeshIfNeeded(true);
-        updateLight(0);
-        update(0);
+        this.rebuildMeshIfNeeded(true);
+        this.updateLight(0);
+        this.update(0);
     }
 
     @Override
     public void update(final float partialTick) {
-        rebuildMeshIfNeeded(false);
+        this.rebuildMeshIfNeeded(false);
 
-        if (chainInstance == null) {
+        if (this.chainInstance == null) {
             return;
         }
 
-        final float rotationsPerTick = cogwheelChainBehaviour.getChainRotationFactor() * kineticBlockEntity.getSpeed() / (60 * 20);
-        final float speedV = (float) (Math.PI * 2 * rotationsPerTick * textureSquish);
+        final float rotationsPerTick = this.cogwheelChainBehaviour.getChainRotationFactor() * this.kineticBlockEntity.getSpeed() / (60 * 20);
+        final float speedV = (float) (Math.PI * 2 * rotationsPerTick * this.textureSquish);
 
-        if (!Mth.equal(lastSpeedV, speedV)) {
-            chainInstance.speed(0, speedV);
-            chainInstance.scaleU = 0;
-            chainInstance.scaleV = 1;
-            chainInstance.offsetU = 0;
-            chainInstance.offsetV = 0;
-            chainInstance.diffU = 0;
-            chainInstance.diffV = 0;
-            chainInstance.setChanged();
-            lastSpeedV = speedV;
+        if (!Mth.equal(this.lastSpeedV, speedV)) {
+            this.chainInstance.speed(0, speedV);
+            this.chainInstance.scaleU = 0;
+            this.chainInstance.scaleV = 1;
+            this.chainInstance.offsetU = 0;
+            this.chainInstance.offsetV = 0;
+            this.chainInstance.diffU = 0;
+            this.chainInstance.diffV = 0;
+            this.chainInstance.setChanged();
+            this.lastSpeedV = speedV;
         }
     }
 
     @Override
     public void updateLight(final float partialTick) {
-        if (chainInstance == null || kineticBlockEntity.getLevel() == null) {
+        if (this.chainInstance == null || this.kineticBlockEntity.getLevel() == null) {
             return;
         }
 
-        final int packedLight = LevelRenderer.getLightColor(kineticBlockEntity.getLevel(), kineticBlockEntity.getBlockPos());
-        if (packedLight != lastPackedLight) {
-            chainInstance.light(packedLight);
-            chainInstance.setChanged();
-            lastPackedLight = packedLight;
+        final int packedLight = LevelRenderer.getLightColor(this.kineticBlockEntity.getLevel(), this.kineticBlockEntity.getBlockPos());
+        if (packedLight != this.lastPackedLight) {
+            this.chainInstance.light(packedLight);
+            this.chainInstance.setChanged();
+            this.lastPackedLight = packedLight;
         }
     }
 
     @Override
     public void collectCrumblingInstances(final Consumer<Instance> consumer) {
-        if (chainInstance != null) {
-            consumer.accept(chainInstance);
+        if (this.chainInstance != null) {
+            consumer.accept(this.chainInstance);
         }
     }
 
     @Override
     public void delete() {
-        deleteInstance();
+        this.deleteInstance();
     }
 
     private void rebuildMeshIfNeeded(final boolean force) {
-        final CogwheelChain chain = cogwheelChainBehaviour.getControlledChain();
+        final CogwheelChain chain = this.cogwheelChainBehaviour.getControlledChain();
         if (chain == null) {
-            deleteInstance();
-            chainSignature = Integer.MIN_VALUE;
+            this.deleteInstance();
+            this.chainSignature = Integer.MIN_VALUE;
             return;
         }
 
         final CogwheelChainType chainType = chain.getChainType();
         final boolean flipInsideOutside = chainType.getRenderType().usesConsistentInsideOutside() && chain.shouldFlipInsideOutside();
         final int newSignature = Objects.hash(chain.hashCode(), chainType.getKey(), flipInsideOutside);
-        if (!force && newSignature == chainSignature && chainInstance != null) {
+        if (!force && newSignature == this.chainSignature && this.chainInstance != null) {
             return;
         }
 
@@ -131,22 +132,22 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
         }
 
         if (totalChainDistance <= 1e-4) {
-            deleteInstance();
-            chainSignature = newSignature;
+            this.deleteInstance();
+            this.chainSignature = newSignature;
             return;
         }
 
-        textureSquish = (float) (Math.ceil(totalChainDistance) / totalChainDistance);
-        final Function<Vector3f, Integer> lighter = IAntiClippedShadowLighter.createGlobalLighter(kineticBlockEntity);
+        this.textureSquish = (float) (Math.ceil(totalChainDistance) / totalChainDistance);
+        final Function<Vector3f, Integer> lighter = IAntiClippedShadowLighter.createGlobalLighter(this.kineticBlockEntity);
 
         final CogwheelChainMesh mesh = new CogwheelChainMesh(
                 segments,
                 chainType,
                 flipInsideOutside,
-                textureSquish,
-                kineticBlockEntity.getBlockPos().getX(),
-                kineticBlockEntity.getBlockPos().getY(),
-                kineticBlockEntity.getBlockPos().getZ(),
+                this.textureSquish,
+                this.kineticBlockEntity.getBlockPos().getX(),
+                this.kineticBlockEntity.getBlockPos().getY(),
+                this.kineticBlockEntity.getBlockPos().getZ(),
                 lighter
         );
         // SQUARE shapes form a closed tube — enable backface culling to avoid rendering
@@ -157,26 +158,26 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
                 .backfaceCulling(!isCross)
                 .build();
 
-        deleteInstance();
+        this.deleteInstance();
 
-        chainInstance = context.instancerProvider()
+        this.chainInstance = this.context.instancerProvider()
                 .instancer(AllInstanceTypes.SCROLLING_TRANSFORMED, new SingleMeshModel(mesh, material))
                 .createInstance();
-        chainInstance
+        this.chainInstance
                 .setIdentityTransform()
-                .translate(getVisualPosition().getX(), getVisualPosition().getY(), getVisualPosition().getZ());
+                .translate(this.getVisualPosition().getX(), this.getVisualPosition().getY(), this.getVisualPosition().getZ());
 
-        chainInstance.overlay(OverlayTexture.NO_OVERLAY);
-        chainInstance.setChanged();
-        chainSignature = newSignature;
-        lastSpeedV = Float.NaN;
-        lastPackedLight = Integer.MIN_VALUE;
+        this.chainInstance.overlay(OverlayTexture.NO_OVERLAY);
+        this.chainInstance.setChanged();
+        this.chainSignature = newSignature;
+        this.lastSpeedV = Float.NaN;
+        this.lastPackedLight = Integer.MIN_VALUE;
     }
 
     private void deleteInstance() {
-        if (chainInstance != null) {
-            chainInstance.delete();
-            chainInstance = null;
+        if (this.chainInstance != null) {
+            this.chainInstance.delete();
+            this.chainInstance = null;
         }
     }
 
@@ -197,20 +198,38 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
             final Bounds bounds = new Bounds();
             final CogwheelChainType.ChainRenderInfo chainRenderInfo = type.getRenderType();
 
+            final Matrix3f accumulatedOrientation = new Matrix3f();
+
             for (final ChainSegment segment : segments) {
                 List<Vec3> destinationPoints = CogwheelChainRenderGeometryBuilder.getEndPointsForChainJoint(
                         segment.from(),
                         segment.to(),
                         segment.postTo(),
                         chainRenderInfo,
-                        segment.toCogwheelAxis()
+                        segment.toCogwheelAxis(),
+                        accumulatedOrientation
                 );
+                if (segment.fromCogwheelAxis().dot(segment.toCogwheelAxis()) < 0.99) {
+                    //Let the axes in accumulatedOrientation be relative
+                    // Z = forwards / averagedir
+                    // Y = perpendicular to forwards and cogwheel axis, this is the radius axis
+                    // X = cogwheel axis
+
+                    //We need to rotate current X and Y around the Z axis to ensure that when we 'roll' (i.e. cogwheel axis goes from world x to world y) the generated geometry is consistent
+                    final int rotationSign = segment.fromCogwheelAxis().cross(segment.toCogwheelAxis()).dot(segment.to().subtract(segment.from())) > 0 ? 1 : -1;
+                    accumulatedOrientation.mul(new Matrix3f(
+                            0, rotationSign, 0,
+                            -rotationSign, 0, 0,
+                            0, 0, 1
+                    ));
+                }
                 final List<Vec3> sourcePoints = CogwheelChainRenderGeometryBuilder.getEndPointsForChainJoint(
                         segment.preFrom(),
                         segment.from(),
                         segment.to(),
                         chainRenderInfo,
-                        segment.fromCogwheelAxis()
+                        segment.fromCogwheelAxis(),
+                        accumulatedOrientation
                 );
 
                 destinationPoints = CogwheelChainRenderGeometryBuilder.getPointsInClosestOrder(destinationPoints, sourcePoints);
@@ -232,13 +251,13 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
 
         @Override
         public int vertexCount() {
-            return vertices.size();
+            return this.vertices.size();
         }
 
         @Override
         public void write(final MutableVertexList vertexList) {
-            for (int i = 0; i < vertices.size(); i++) {
-                final Vertex vertex = vertices.get(i);
+            for (int i = 0; i < this.vertices.size(); i++) {
+                final Vertex vertex = this.vertices.get(i);
                 vertexList.x(i, vertex.x);
                 vertexList.y(i, vertex.y);
                 vertexList.z(i, vertex.z);
@@ -258,7 +277,7 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
 
         @Override
         public Vector4fc boundingSphere() {
-            return boundingSphere;
+            return this.boundingSphere;
         }
 
         private record Vertex(float x, float y, float z, float u, float v, float nx, float ny, float nz, int light) {
@@ -273,12 +292,12 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
             private float maxZ = Float.NEGATIVE_INFINITY;
 
             void include(final float x, final float y, final float z) {
-                if (x < minX) minX = x;
-                if (y < minY) minY = y;
-                if (z < minZ) minZ = z;
-                if (x > maxX) maxX = x;
-                if (y > maxY) maxY = y;
-                if (z > maxZ) maxZ = z;
+                if (x < this.minX) this.minX = x;
+                if (y < this.minY) this.minY = y;
+                if (z < this.minZ) this.minZ = z;
+                if (x > this.maxX) this.maxX = x;
+                if (y > this.maxY) this.maxY = y;
+                if (z > this.maxZ) this.maxZ = z;
             }
 
             Vector4fc toBoundingSphere(final List<Vertex> vertices) {
@@ -286,9 +305,9 @@ public class CogwheelChainBehaviourVisual extends RenderedBehaviourExtension.Beh
                     return new Vector4f(0, 0, 0, 0.01f);
                 }
 
-                final float cx = (minX + maxX) * 0.5f;
-                final float cy = (minY + maxY) * 0.5f;
-                final float cz = (minZ + maxZ) * 0.5f;
+                final float cx = (this.minX + this.maxX) * 0.5f;
+                final float cy = (this.minY + this.maxY) * 0.5f;
+                final float cz = (this.minZ + this.maxZ) * 0.5f;
                 float r2 = 0;
                 for (final Vertex vertex : vertices) {
                     final float dx = vertex.x - cx;

@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-31T19:41:16.964897324	Registrate Provider for bits_n_bobs [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.21.1	2026-09-05T11:09:51.196988241	Registrate Provider for bits_n_bobs [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 bae96470ab6d0efb7a73bf4e5f0a82277358b272 assets/bits_n_bobs/blockstates/andesite_encased_flanged_cogwheel.json
 161eacda54e0ee43ba4ec50b5a179c7c27d6ab3a assets/bits_n_bobs/blockstates/andesite_encased_large_flanged_cogwheel.json
 70069cf32ef31f524297f96e15c560aa8e3e41ae assets/bits_n_bobs/blockstates/andesite_encased_piston_extension_pole.json
@@ -1140,6 +1140,7 @@ e9c7f0b566532fff7cf437a0090a3f922f1858a0 data/create/recipe/scoria_tile_slab_rec
 02533d9a61ad20784b54a0aee5983e21e7dfd6cb data/create/recipe/tuff_tile_slab_recycling.json
 f81752657747e2c27f70e26c6317537f0a1d4930 data/create/recipe/veridium_tile_slab_recycling.json
 033f75b4c401f8616e1d2b8a61c46886cd9a5bc2 data/create/tags/block/brittle.json
+8048bba6a921b19c34ebbc5acf258b4e532e2e28 data/create/tags/block/fan_transparent.json
 aba72e37571e0cf714fa38ace2b165cbe7f94d70 data/create/tags/block/safe_nbt.json
 749d9923fac41fc2f812c706568223fd1d1b251f data/create/tags/item/invalid_for_track_paving.json
 b2746ad5fb6e8a9bd43915d905fd9a3c218c3c63 data/create/tags/item/stone_types/andesite.json

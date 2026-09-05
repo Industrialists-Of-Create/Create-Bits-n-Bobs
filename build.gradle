@@ -2,7 +2,8 @@ plugins {
     id 'java-library'
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.140'
-    id 'net.azmod.release' version '0.1.0'
+    id 'me.modmuss50.mod-publish-plugin' version '2.1.1'
+    id 'net.azmod.release' version '0.2.1'
 }
 
 def isSnapshotVersioning = project.hasProperty('snapshot_versioning') && project.property('snapshot_versioning').toString().toBoolean()

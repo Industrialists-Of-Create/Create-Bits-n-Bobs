@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Hides suppressed items from creative tabs based on the shared {@link SuppressionFilters}, which both Bits 'n' Bobs
@@ -33,8 +34,8 @@ public abstract class CreativeModeTabMixin {
         if (SuppressionFilters.ITEM_FILTERS.isEmpty()) {
             return;
         }
-        this.displayItems.removeIf(SuppressionFilters::isSuppressed);
-        this.displayItemsSearchTab.removeIf(SuppressionFilters::isSuppressed);
+        this.displayItems = this.displayItems.stream().filter(stack -> !SuppressionFilters.isSuppressed(stack)).toList();
+        this.displayItemsSearchTab = this.displayItemsSearchTab.stream().filter(stack -> !SuppressionFilters.isSuppressed(stack)).collect(Collectors.toSet());
     }
 
     @Inject(method = "getDisplayItems", at = @At("HEAD"), cancellable = true)

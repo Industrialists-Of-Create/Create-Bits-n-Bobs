@@ -186,6 +186,7 @@ public class BnbDecorativeBlocks {
             .blockstate((c, p) -> p.simpleBlock(c.get()))
             .onRegister(connectedTextures(() -> new SimpleCTBehaviour(BnbSpriteShifts.INDUSTRIAL_GRATING)))
             .addLayer(() -> RenderType::cutout)
+            .tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
             .simpleItem()
             .register();
 
@@ -210,6 +211,7 @@ public class BnbDecorativeBlocks {
             .onRegister(connectedTextures(
                     () -> new GratingPanelCTBehaviour(BnbSpriteShifts.INDUSTRIAL_GRATING)))
             .addLayer(() -> RenderType::cutout)
+            .tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
             .item(GratingPanelBlockItem::new)
             .model((c, p) -> p.withExistingParent(
                     c.getName(),

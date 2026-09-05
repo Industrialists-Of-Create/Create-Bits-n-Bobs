@@ -5,7 +5,6 @@ import com.kipti.bnb.content.kinetics.cogwheel_chain.graph.RenderedChainPathNode
 import com.kipti.bnb.content.kinetics.cogwheel_chain.types.CogwheelChainType;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
-import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -113,7 +112,8 @@ public class CogwheelChainRenderGeometryBuilder {
                                                        final Vec3 point,
                                                        final Vec3 after,
                                                        final CogwheelChainType.ChainRenderInfo chainRenderInfo,
-                                                       final Vec3 cogwheelAxis) {
+                                                       final Vec3 cogwheelAxis,
+                                                       final Matrix3f accumulatedOrientation) {
         final float radius = (float) ((chainRenderInfo.getVertexShape() == CogwheelChainType.VertexShape.CROSS ? Math.sqrt(
                 2f) / 2f : 1f) * 1f / 16f);
         final Vec3 dirToBefore = point.subtract(before).normalize();
@@ -123,36 +123,36 @@ public class CogwheelChainRenderGeometryBuilder {
 
         final Matrix3f transform;
 
-        if (chainRenderInfo.getVertexShape() == CogwheelChainType.VertexShape.CROSS) {
-            transform = new Quaternionf()
-                    .rotationTo(0, 1, 0, (float) averagedDir.x, (float) averagedDir.y, (float) averagedDir.z)
-                    .get(new Matrix3f());
-        } else {
-            // Project averagedDir to axis if needed
-            if (averagedDir.dot(cogwheelAxis) > 1e-4) {
-                averagedDir = averagedDir.subtract(cogwheelAxis.multiply(averagedDir)).normalize();
-            }
-
-            // Fallback if projection degenerates
-            if (averagedDir.lengthSqr() < 1e-4) {
-                averagedDir = cogwheelAxis.cross(new Vec3(1, 0, 0));
-            }
-            if (averagedDir.lengthSqr() < 1e-4) {
-                averagedDir = cogwheelAxis.cross(new Vec3(0, 1, 0));
-            }
-
-            final Vec3 perpendicular = cogwheelAxis.cross(averagedDir);
-            transform = new Matrix3f(
-                    (float) perpendicular.x, (float) perpendicular.y, (float) perpendicular.z,
-                    (float) averagedDir.x, (float) averagedDir.y, (float) averagedDir.z,
-                    (float) cogwheelAxis.x, (float) cogwheelAxis.y, (float) cogwheelAxis.z
-            );
+//        if (chainRenderInfo.getVertexShape() == CogwheelChainType.VertexShape.CROSS) {
+//            transform = new Quaternionf()
+//                    .rotationTo(0, 1, 0, (float) averagedDir.x, (float) averagedDir.y, (float) averagedDir.z)
+//                    .get(new Matrix3f());
+//        } else {
+        // Project averagedDir to axis if needed, shouldnt be
+        if (averagedDir.dot(cogwheelAxis) > 1e-4) {
+            averagedDir = averagedDir.subtract(cogwheelAxis.multiply(averagedDir)).normalize();
         }
+
+        // Fallback if projection degenerates
+        if (averagedDir.lengthSqr() < 1e-4) {
+            averagedDir = cogwheelAxis.cross(new Vec3(1, 0, 0));
+        }
+        if (averagedDir.lengthSqr() < 1e-4) {
+            averagedDir = cogwheelAxis.cross(new Vec3(0, 1, 0));
+        }
+
+        final Vec3 perpendicular = cogwheelAxis.cross(averagedDir);
+        transform = new Matrix3f(
+                (float) perpendicular.x, (float) perpendicular.y, (float) perpendicular.z,
+                (float) cogwheelAxis.x, (float) cogwheelAxis.y, (float) cogwheelAxis.z,
+                (float) averagedDir.x, (float) averagedDir.y, (float) averagedDir.z
+        ).mul(accumulatedOrientation);
+//        }
 
         final Vector3f localAxis1Joml = transform.transform(1f, 0f, 0f, new Vector3f());
         final Vec3 localAxis1Direction = new Vec3(localAxis1Joml.x, localAxis1Joml.y, localAxis1Joml.z).normalize();
         final Vec3 localAxis1 = localAxis1Direction.scale(chainRenderInfo.getHeight() / 2f);
-        final Vector3f localAxis2Joml = transform.transform(0f, 0f, 1f, new Vector3f());
+        final Vector3f localAxis2Joml = transform.transform(0f, 1f, 0f, new Vector3f());
         final Vec3 localAxis2 = new Vec3(localAxis2Joml.x, localAxis2Joml.y, localAxis2Joml.z).normalize().scale(
                 chainRenderInfo.getWidth() / 2f);
 

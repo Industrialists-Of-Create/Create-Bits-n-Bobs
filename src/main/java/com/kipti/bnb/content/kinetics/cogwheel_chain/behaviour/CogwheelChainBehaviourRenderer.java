@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -62,6 +63,7 @@ public class CogwheelChainBehaviourRenderer extends BlockEntityBehaviourRenderer
                 return;
             }
             final double chainTextureSquish = Math.ceil(totalChainDistance) / totalChainDistance;
+            final Matrix3f accumulatedOrientation = new Matrix3f(); //Used to help with orientation when rolling around axes
             for (final ChainSegment segment : segments) {
                 final double stretchOffset = offset + segment.uvStart();
 
@@ -79,7 +81,8 @@ public class CogwheelChainBehaviourRenderer extends BlockEntityBehaviourRenderer
                         (float) stretchOffset,
                         (float) chainTextureSquish,
                         type,
-                        flipInsideOutside
+                        flipInsideOutside,
+                        accumulatedOrientation
                 );
             }
         }
@@ -99,7 +102,8 @@ public class CogwheelChainBehaviourRenderer extends BlockEntityBehaviourRenderer
                              final float offset,
                              final float textureSquish,
                              final CogwheelChainType type,
-                             final boolean flipInsideOutside) {
+                             final boolean flipInsideOutside,
+                             final Matrix3f accumulatedOrientation) {
         final Vec3 diff = to.subtract(from);
         final double yaw = Mth.RAD_TO_DEG * Mth.atan2(diff.x, diff.z);
         final double pitch = Mth.RAD_TO_DEG * Mth.atan2(
@@ -141,7 +145,8 @@ public class CogwheelChainBehaviourRenderer extends BlockEntityBehaviourRenderer
                     light1,
                     light2,
                     type,
-                    flipInsideOutside
+                    flipInsideOutside,
+                    accumulatedOrientation
             );
         else {
             chain.rotateYDegrees((float) yaw);
@@ -179,28 +184,45 @@ public class CogwheelChainBehaviourRenderer extends BlockEntityBehaviourRenderer
                                                         final int lightAtSource,
                                                         final int lightAtDest,
                                                         final CogwheelChainType type,
-                                                        final boolean flipInsideOutside) {
+                                                        final boolean flipInsideOutside,
+                                                        final Matrix3f accumulatedOrientation) {
         final CogwheelChainType.ChainRenderInfo chainRenderInfo = type.getRenderType();
 
         // Calculate corners in world space for the segment ends
-        List<Vec3> destinationPoints = CogwheelChainRenderGeometryBuilder.getEndPointsForChainJoint(
+        final List<Vec3> destinationPoints = CogwheelChainRenderGeometryBuilder.getEndPointsForChainJoint(
                 from,
                 to,
                 postTo,
                 chainRenderInfo,
-                toCogwheelAxis
+                toCogwheelAxis,
+                accumulatedOrientation
         );
+        if (fromCogwheelAxis.dot(toCogwheelAxis) < 0.99) {
+            //Let the axes in accumulatedOrientation be relative
+            // Z = forwards / averagedir
+            // Y = perpendicular to forwards and cogwheel axis, this is the radius axis
+            // X = cogwheel axis
+
+            //We need to rotate current X and Y around the Z axis to ensure that when we 'roll' (i.e. cogwheel axis goes from world x to world y) the generated geometry is consistent
+            final int rotationSign = fromCogwheelAxis.cross(toCogwheelAxis).dot(to.subtract(from)) > 0 ? 1 : -1;
+            accumulatedOrientation.mul(new Matrix3f(
+                    0, rotationSign, 0,
+                    -rotationSign, 0, 0,
+                    0, 0, 1
+            ));
+        }
         final List<Vec3> sourcePoints = CogwheelChainRenderGeometryBuilder.getEndPointsForChainJoint(
                 preFrom,
                 from,
                 to,
                 chainRenderInfo,
-                fromCogwheelAxis
+                fromCogwheelAxis,
+                accumulatedOrientation
         );
 
         //This is my shame, i couldnt find a deterministic way to order the points consistently between joints so here we are,
         //Matching it in a post process step
-        destinationPoints = CogwheelChainRenderGeometryBuilder.getPointsInClosestOrder(destinationPoints, sourcePoints);
+//        destinationPoints = CogwheelChainRenderGeometryBuilder.getPointsInClosestOrder(destinationPoints, sourcePoints);
 
         final float length = (float) from.distanceTo(to);
         final float minV = offset * textureSquish;

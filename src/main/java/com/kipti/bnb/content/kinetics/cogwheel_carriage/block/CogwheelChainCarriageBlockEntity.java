@@ -71,6 +71,11 @@ public class CogwheelChainCarriageBlockEntity extends SmartBlockEntity implement
         final Vec3 facing = attachment.getCurrentDirection(this.level);
         final Direction nearestDirection = Direction.getNearest(facing.x, facing.y, facing.z);
 
+        if (nearestDirection.getAxis() == Direction.Axis.Y) {
+            this.lastException = new AssemblyException("bits_n_bobs.no_chain_to_attach_to");
+            return;
+        }
+
         this.level.setBlock(
                 this.getBlockPos(), this.getBlockState().setValue(CogwheelChainCarriageBlock.FACING, nearestDirection),
                 Block.UPDATE_ALL
