@@ -350,3 +350,7 @@
 - Added missing null guard when transferring chain controller dealing with a controller in a broken state.
 - Fixed #164 where certain creative tabs would cause crashes with item suppression
 - Block vertical chain carriages instead of crashing
+
+# 1.21.1-2.3.1
+
+- Fixed item suppression causing creative tabs to not link to item groups

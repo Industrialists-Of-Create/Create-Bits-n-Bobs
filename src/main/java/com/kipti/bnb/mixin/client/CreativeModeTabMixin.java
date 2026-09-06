@@ -3,6 +3,7 @@ package com.kipti.bnb.mixin.client;
 import com.kipti.bnb.foundation.SuppressionFilters;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackLinkedSet;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Hides suppressed items from creative tabs based on the shared {@link SuppressionFilters}, which both Bits 'n' Bobs
@@ -34,8 +34,17 @@ public abstract class CreativeModeTabMixin {
         if (SuppressionFilters.ITEM_FILTERS.isEmpty()) {
             return;
         }
-        this.displayItems = this.displayItems.stream().filter(stack -> !SuppressionFilters.isSuppressed(stack)).toList();
-        this.displayItemsSearchTab = this.displayItemsSearchTab.stream().filter(stack -> !SuppressionFilters.isSuppressed(stack)).collect(Collectors.toSet());
+        final Set<ItemStack> filteredDisplayItems = ItemStackLinkedSet.createTypeAndComponentsSet();
+        filteredDisplayItems.addAll(this.displayItems.stream()
+                .filter(stack -> !SuppressionFilters.isSuppressed(stack))
+                .toList());
+        this.displayItems = filteredDisplayItems;
+
+        final Set<ItemStack> filteredSearchTab = ItemStackLinkedSet.createTypeAndComponentsSet();
+        filteredSearchTab.addAll(this.displayItemsSearchTab.stream()
+                .filter(stack -> !SuppressionFilters.isSuppressed(stack))
+                .toList());
+        this.displayItemsSearchTab = filteredSearchTab;
     }
 
     @Inject(method = "getDisplayItems", at = @At("HEAD"), cancellable = true)
